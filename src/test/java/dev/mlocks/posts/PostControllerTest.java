@@ -23,11 +23,16 @@
  */
 package dev.mlocks.posts;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +50,17 @@ public class PostControllerTest {
     void setUp() {
         // create some posts
         posts = List.of(
-                new Post(1, 1, "Post 1 title", null),
-                new Post(2, 1, "Post 2 title", null)
+                new Post(1, 1, "Post 1 title", "This is my first post", null),
+                new Post(2, 1, "Post 2 title", "This is my second post", null)
         );
+    }
+
+    // REST API
+
+    // List
+    @Test
+    void shouldFindAllPosts() throws Exception {
+
+        mockMvc.perform(get("/api/posts")).andExpect(status().is(200));
     }
 }
