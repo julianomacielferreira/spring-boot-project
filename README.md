@@ -17,3 +17,4 @@ I have made  make my own modifications and improvements (i.e, add new features).
 
 - [**Spring Boot**](https://spring.io/projects/spring-boot)
 - [**MDN Web Docs**](https://developer.mozilla.org/)
+- [**IntelliJ IDEA Community Edition**](https://www.jetbrains.com/idea/download/?section=linux)
