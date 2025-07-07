@@ -79,9 +79,6 @@ class PostController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     void delete(@PathVariable Integer id) {
-
-        Optional<Post> found = this.postRepository.findById(id);
-
-        found.ifPresent(post -> this.postRepository.deleteById(post.id()));
+        this.postRepository.deleteById(id);
     }
 }

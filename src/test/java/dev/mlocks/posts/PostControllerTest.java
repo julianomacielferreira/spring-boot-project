@@ -23,7 +23,7 @@
  */
 package dev.mlocks.posts;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -185,10 +185,13 @@ public class PostControllerTest {
     @Test
     void shouldDeletePostWhenGivenValidId() throws Exception {
 
+        doNothing().when(this.postRepository).deleteById(1);
+
         this.mockMvc.perform(
                 delete("/api/posts/1")
         ).andExpect(status().isNoContent());
 
+        verify(this.postRepository, times(1)).deleteById(1);
     }
 
     private String getJSONFromPost(Post post) {
