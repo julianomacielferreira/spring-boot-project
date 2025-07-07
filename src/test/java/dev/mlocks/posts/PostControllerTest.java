@@ -94,9 +94,25 @@ public class PostControllerTest {
     @Test
     void shouldFindPostWhenGivenValidId() throws Exception {
 
-        when(postRepository.findById(1)).thenReturn(Optional.of(this.posts.get(0)));
+        when(postRepository.findById(1)).thenReturn(Optional.of(this.posts.getFirst()));
+
+        Post post = this.posts.getFirst();
+
+        String json = String.format("""
+                            {
+                              "userId": %s,
+                              "id": %s,
+                              "title": "%s",
+                              "body": "%s",
+                              "version": null
+                            }
+                        """,
+                post.userId(),
+                post.id(),
+                post.title(),
+                post.body());
 
         this.mockMvc.perform(get("/api/posts/1")).
-                andExpect(status().is(200));
+                andExpect(status().is(200)).andExpect(content().json(json));
     }
 }
