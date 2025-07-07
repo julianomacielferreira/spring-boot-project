@@ -33,8 +33,14 @@ import java.util.List;
 @RequestMapping("/api/posts")
 class PostController {
 
+    private final PostRepository postRepository;
+
+    public PostController(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
+
     @GetMapping("")
     List<Post> findAll() {
-        return null;
+        return postRepository.findAll();
     }
 }
