@@ -94,7 +94,7 @@ public class PostControllerTest {
     @Test
     void shouldFindPostWhenGivenValidId() throws Exception {
 
-        when(postRepository.findById(1)).thenReturn(Optional.of(this.posts.getFirst()));
+        when(this.postRepository.findById(1)).thenReturn(Optional.of(this.posts.getFirst()));
 
         Post post = this.posts.getFirst();
 
@@ -114,5 +114,14 @@ public class PostControllerTest {
 
         this.mockMvc.perform(get("/api/posts/1")).
                 andExpect(status().is(200)).andExpect(content().json(json));
+    }
+
+    @Test
+    void shouldNotFindPostWhenGivenInvalidId() throws Exception {
+
+        when(this.postRepository.findById(999)).thenThrow(PostNotFoundException.class);
+
+        this.mockMvc.perform(get("/api/posts/999")).
+                andExpect(status().isNotFound());
     }
 }
