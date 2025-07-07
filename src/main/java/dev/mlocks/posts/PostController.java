@@ -23,6 +23,8 @@
  */
 package dev.mlocks.posts;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,5 +49,11 @@ class PostController {
     Optional<Post> findById(@PathVariable Integer id) {
         return Optional.of(this.postRepository.findById(id).
                 orElseThrow());
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("")
+    Post create(@RequestBody @Validated Post post) {
+        return this.postRepository.save(post);
     }
 }
