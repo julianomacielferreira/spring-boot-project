@@ -182,6 +182,15 @@ public class PostControllerTest {
 
     }
 
+    @Test
+    void shouldDeletePostWhenGivenValidId() throws Exception {
+
+        this.mockMvc.perform(
+                delete("/api/posts/1")
+        ).andExpect(status().isNoContent());
+
+    }
+
     private String getJSONFromPost(Post post) {
 
         return String.format("""
