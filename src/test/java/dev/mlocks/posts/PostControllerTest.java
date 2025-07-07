@@ -39,6 +39,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @WebMvcTest(PostController.class)
 @AutoConfigureMockMvc
@@ -55,7 +56,7 @@ public class PostControllerTest {
     @BeforeEach
     void setUp() {
         // create some posts
-        posts = List.of(
+        this.posts = List.of(
                 new Post(1, 1, "Post 1 title", "This is my first post", null),
                 new Post(2, 2, "Post 2 title", "This is my second post", null)
         );
@@ -83,10 +84,19 @@ public class PostControllerTest {
                 ]
                 """;
 
-        when(postRepository.findAll()).thenReturn(posts);
+        when(this.postRepository.findAll()).thenReturn(this.posts);
 
-        mockMvc.perform(get("/api/posts")).
+        this.mockMvc.perform(get("/api/posts")).
                 andExpect(status().is(200)).
                 andExpect(content().json(jsonResponse));
+    }
+
+    @Test
+    void shouldFindPostWhenGivenValidId() throws Exception {
+
+        when(postRepository.findById(1)).thenReturn(Optional.of(this.posts.get(0)));
+
+        this.mockMvc.perform(get("/api/posts/1")).
+                andExpect(status().is(200));
     }
 }
