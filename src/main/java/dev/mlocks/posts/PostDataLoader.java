@@ -23,10 +23,10 @@
  */
 package dev.mlocks.posts;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.asm.TypeReference;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -50,7 +50,7 @@ public class PostDataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         if (postRepository.count() == 0) {
-            String POSTS_JSON = "data/posts.json";
+            String POSTS_JSON = "/data/posts.json";
 
             LOGGER.info("Loading posts into database from JSON: {}", POSTS_JSON);
 
