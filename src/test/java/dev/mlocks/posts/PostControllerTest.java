@@ -23,7 +23,9 @@
  */
 package dev.mlocks.posts;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -31,6 +33,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 
@@ -46,21 +49,44 @@ public class PostControllerTest {
 
     List<Post> posts = new ArrayList<>();
 
+    @MockitoBean
+    PostRepository postRepository;
+
     @BeforeEach
     void setUp() {
         // create some posts
         posts = List.of(
                 new Post(1, 1, "Post 1 title", "This is my first post", null),
-                new Post(2, 1, "Post 2 title", "This is my second post", null)
+                new Post(2, 2, "Post 2 title", "This is my second post", null)
         );
     }
 
-    // REST API
-
-    // List
     @Test
     void shouldFindAllPosts() throws Exception {
 
-        mockMvc.perform(get("/api/posts")).andExpect(status().is(200));
+        String jsonResponse = """
+                [
+                    {
+                      "userId": 1,
+                      "id": 1,
+                      "title": "Post 1 title",
+                      "body": "This is my first post",
+                      "version": null
+                    },
+                    {
+                      "userId": 2,
+                      "id": 2,
+                      "title": "Post 2 title",
+                      "body": "This is my second post",
+                      "version": null
+                    }
+                ]
+                """;
+
+        when(postRepository.findAll()).thenReturn(posts);
+
+        mockMvc.perform(get("/api/posts")).
+                andExpect(status().is(200)).
+                andExpect(content().json(jsonResponse));
     }
 }
