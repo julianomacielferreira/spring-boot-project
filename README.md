@@ -7,9 +7,14 @@ I have made  make my own modifications and improvements (i.e, add new features).
 
 ## Project File Structure
 
-@TODO
+![Project File structure](./src/main/resources/static/project-file-structure.png)
+
 
 ## Running the application
+
+@TODO
+
+## Endpoints
 
 @TODO
 
