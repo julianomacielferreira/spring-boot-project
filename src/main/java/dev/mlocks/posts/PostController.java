@@ -75,4 +75,10 @@ class PostController {
             throw new PostNotFoundException("Post not found.");
         }
     }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    void delete(@PathVariable Integer id) {
+        this.postRepository.deleteById(id);
+    }
 }
