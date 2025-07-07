@@ -24,6 +24,7 @@
 package dev.mlocks.posts;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -123,5 +124,34 @@ public class PostControllerTest {
 
         this.mockMvc.perform(get("/api/posts/999")).
                 andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldCreateNewPostWhenPostIsValid() throws Exception {
+
+        Post post = new Post(3, 3, "Title 3", "This is my third post", null);
+
+        when(this.postRepository.save(post)).thenReturn(post);
+
+        String json = String.format("""
+                            {
+                              "userId": %s,
+                              "id": %s,
+                              "title": "%s",
+                              "body": "%s",
+                              "version": null
+                            }
+                        """,
+                post.userId(),
+                post.id(),
+                post.title(),
+                post.body());
+
+
+        this.mockMvc.perform(
+                post("/api/posts").
+                        contentType("application/json").
+                        content(json)
+        ).andExpect(status().is(201));
     }
 }
