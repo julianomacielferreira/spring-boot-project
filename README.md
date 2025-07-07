@@ -19,3 +19,4 @@ I have made  make my own modifications and improvements (i.e, add new features).
 - [**MDN Web Docs**](https://developer.mozilla.org/)
 - [**IntelliJ IDEA Community Edition**](https://www.jetbrains.com/idea/download/?section=linux)
 - [**Docker**](https://www.docker.com/)
+- [**{JSON} Placeholder**](https://jsonplaceholder.typicode.com/)
