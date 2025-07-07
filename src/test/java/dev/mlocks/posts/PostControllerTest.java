@@ -163,6 +163,23 @@ public class PostControllerTest {
 
     }
 
+    @Test
+    void shouldNotUpdatePostWhenGivenInvalidPost() throws Exception {
+
+        Post invalid = new Post(1, 1, "", "", null);
+
+        when(this.postRepository.save(invalid)).thenReturn(invalid);
+
+        String json = this.getJSONFromPost(invalid);
+
+        this.mockMvc.perform(
+                put("/api/posts").
+                        contentType("application/json").
+                        content(json)
+        ).andExpect(status().isBadRequest());
+
+    }
+
     private String getJSONFromPost(Post post) {
 
         return String.format("""
