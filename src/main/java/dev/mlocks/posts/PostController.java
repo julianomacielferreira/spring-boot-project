@@ -56,4 +56,9 @@ class PostController {
     Post create(@RequestBody @Validated Post post) {
         return this.postRepository.save(post);
     }
+
+    @PutMapping("")
+    Post update(@RequestBody @Validated Post post) {
+        return this.postRepository.save(post);
+    }
 }

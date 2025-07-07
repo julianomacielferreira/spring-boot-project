@@ -24,8 +24,7 @@
 package dev.mlocks.posts;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -146,9 +145,27 @@ public class PostControllerTest {
         ).andExpect(status().isBadRequest());
     }
 
+    @Test
+    void shouldUpdatePostWhenGivenValidPost() throws Exception {
+
+        Post updated = new Post(1, 1, "Updated Title 1", "Updated Body 1", null);
+
+        when(this.postRepository.save(updated)).thenReturn(updated);
+
+        String json = this.getJSONFromPost(updated);
+
+        this.mockMvc.perform(
+                put("/api/posts").
+                        contentType("application/json").
+                        content(json)
+        ).andExpect(status().isOk());
+
+
+    }
+
     private String getJSONFromPost(Post post) {
 
-        String json = String.format("""
+        return String.format("""
                             {
                               "userId": %s,
                               "id": %s,
@@ -161,7 +178,5 @@ public class PostControllerTest {
                 post.id(),
                 post.title(),
                 post.body());
-
-        return json;
     }
 }
