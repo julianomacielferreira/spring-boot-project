@@ -98,10 +98,13 @@ public class PostControllerTest {
 
         Post post = this.posts.getFirst();
 
-        String json = this.getJSONFromPost(post);
+        String requestBody = this.getJSONFromPost(post);
 
         this.mockMvc.perform(get("/api/posts/1")).
-                andExpect(status().isOk()).andExpect(content().json(json));
+                andExpect(status().isOk()).
+                andExpect(content().
+                        json(requestBody)
+                );
     }
 
     @Test
@@ -120,12 +123,12 @@ public class PostControllerTest {
 
         when(this.postRepository.save(post)).thenReturn(post);
 
-        String json = this.getJSONFromPost(post);
+        String requestBody = this.getJSONFromPost(post);
 
         this.mockMvc.perform(
                 post("/api/posts").
                         contentType("application/json").
-                        content(json)
+                        content(requestBody)
         ).andExpect(status().isCreated());
     }
 
@@ -136,12 +139,12 @@ public class PostControllerTest {
 
         when(this.postRepository.save(post)).thenReturn(post);
 
-        String json = this.getJSONFromPost(post);
+        String requestBody = this.getJSONFromPost(post);
 
         this.mockMvc.perform(
                 post("/api/posts").
                         contentType("application/json").
-                        content(json)
+                        content(requestBody)
         ).andExpect(status().isBadRequest());
     }
 
@@ -150,14 +153,15 @@ public class PostControllerTest {
 
         Post updated = new Post(1, 1, "Updated Title 1", "Updated Body 1", null);
 
+        when(this.postRepository.findById(1)).thenReturn(Optional.of(updated));
         when(this.postRepository.save(updated)).thenReturn(updated);
 
-        String json = this.getJSONFromPost(updated);
+        String requestBody = this.getJSONFromPost(updated);
 
         this.mockMvc.perform(
-                put("/api/posts").
+                put("/api/posts/1").
                         contentType("application/json").
-                        content(json)
+                        content(requestBody)
         ).andExpect(status().isOk());
 
 
@@ -166,17 +170,15 @@ public class PostControllerTest {
     @Test
     void shouldNotUpdatePostWhenGivenInvalidPost() throws Exception {
 
-        Post invalid = new Post(1, 1, "", "", null);
+        Post invalid = new Post(999, 999, "Title not exists", "Body not exists", null);
 
-        when(this.postRepository.save(invalid)).thenReturn(invalid);
-
-        String json = this.getJSONFromPost(invalid);
+        String requestBody = this.getJSONFromPost(invalid);
 
         this.mockMvc.perform(
-                put("/api/posts").
+                put("/api/posts/999").
                         contentType("application/json").
-                        content(json)
-        ).andExpect(status().isBadRequest());
+                        content(requestBody)
+        ).andExpect(status().isNotFound());
 
     }
 
