@@ -88,7 +88,7 @@ public class PostControllerTest {
         when(this.postRepository.findAll()).thenReturn(this.posts);
 
         this.mockMvc.perform(get("/api/posts")).
-                andExpect(status().is(200)).
+                andExpect(status().isOk()).
                 andExpect(content().json(jsonResponse));
     }
 
@@ -99,22 +99,10 @@ public class PostControllerTest {
 
         Post post = this.posts.getFirst();
 
-        String json = String.format("""
-                            {
-                              "userId": %s,
-                              "id": %s,
-                              "title": "%s",
-                              "body": "%s",
-                              "version": null
-                            }
-                        """,
-                post.userId(),
-                post.id(),
-                post.title(),
-                post.body());
+        String json = this.getJSONFromPost(post);
 
         this.mockMvc.perform(get("/api/posts/1")).
-                andExpect(status().is(200)).andExpect(content().json(json));
+                andExpect(status().isOk()).andExpect(content().json(json));
     }
 
     @Test
@@ -133,6 +121,33 @@ public class PostControllerTest {
 
         when(this.postRepository.save(post)).thenReturn(post);
 
+        String json = this.getJSONFromPost(post);
+
+        this.mockMvc.perform(
+                post("/api/posts").
+                        contentType("application/json").
+                        content(json)
+        ).andExpect(status().isCreated());
+    }
+
+    @Test
+    void shouldNotCreatePostWhenPostIsInvalid() throws Exception {
+
+        Post post = new Post(4, 4, "", "", null);
+
+        when(this.postRepository.save(post)).thenReturn(post);
+
+        String json = this.getJSONFromPost(post);
+
+        this.mockMvc.perform(
+                post("/api/posts").
+                        contentType("application/json").
+                        content(json)
+        ).andExpect(status().isBadRequest());
+    }
+
+    private String getJSONFromPost(Post post) {
+
         String json = String.format("""
                             {
                               "userId": %s,
@@ -147,11 +162,6 @@ public class PostControllerTest {
                 post.title(),
                 post.body());
 
-
-        this.mockMvc.perform(
-                post("/api/posts").
-                        contentType("application/json").
-                        content(json)
-        ).andExpect(status().is(201));
+        return json;
     }
 }
