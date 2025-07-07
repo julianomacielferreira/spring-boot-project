@@ -23,8 +23,8 @@
  */
 package dev.mlocks.posts;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,12 +53,26 @@ class PostController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    Post create(@RequestBody @Validated Post post) {
+    Post create(@RequestBody @Valid Post post) {
         return this.postRepository.save(post);
     }
 
-    @PutMapping("")
-    Post update(@RequestBody @Validated Post post) {
-        return this.postRepository.save(post);
+    @PutMapping("/{id}")
+    Post update(@PathVariable Integer id, @RequestBody @Valid Post post) {
+        Optional<Post> existing = this.postRepository.findById(id);
+
+        if (existing.isPresent()) {
+
+            Post update = new Post(
+                    existing.get().id(),
+                    existing.get().userId(),
+                    post.title(),
+                    post.body(),
+                    existing.get().version());
+
+            return this.postRepository.save(update);
+        } else {
+            throw new PostNotFoundException("Post not found.");
+        }
     }
 }
