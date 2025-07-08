@@ -7,8 +7,49 @@ I have made  make my own modifications and improvements (i.e, add new features).
 
 ## Project File Structure
 
-![Project File structure](./src/main/resources/static/project-file-structure.png)
+```
+├── build.gradle
+├── compose.yaml
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradlew
+├── gradlew.bat
+├── HELP.md
+├── LICENSE
+├── README.md
+├── settings.gradle
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── dev
+    │   │       └── mlocks
+    │   │           ├── Application.java
+    │   │           └── posts
+    │   │               ├── PostController.java
+    │   │               ├── PostDataLoader.java
+    │   │               ├── Post.java
+    │   │               ├── PostNotFoundException.java
+    │   │               ├── PostRepository.java
+    │   │               └── Posts.java
+    │   └── resources
+    │       ├── application.properties
+    │       ├── data
+    │       │   └── posts.json
+    │       ├── schema.sql
+    │       ├── static
+    │       │   ├── project-file-structure.png
+    │       │   └── video-thumbnail.jpg
+    │       └── templates
+    └── test
+        └── java
+            └── dev
+                └── mlocks
+                    └── posts
+                        └── PostControllerTest.java
 
+```
 
 ## Running the application
 
