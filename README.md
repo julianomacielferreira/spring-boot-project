@@ -8,6 +8,7 @@ I have made  make my own modifications and improvements (i.e, add new features).
 ## Project File Structure
 
 ```
+.
 ├── build.gradle
 ├── compose.yaml
 ├── gradle
