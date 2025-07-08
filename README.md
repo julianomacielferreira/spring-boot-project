@@ -16,13 +16,13 @@ I have made  make my own modifications and improvements (i.e, add new features).
 
 ## Endpoints
 
-- Lists all posts: **/api/posts**
+- Retrieve all posts: **/api/posts**
 
 ```bash
 $ curl --location 'http://localhost:8080/api/posts'
 ```
 
-Response:
+- Response:
 
 ```json
 [
