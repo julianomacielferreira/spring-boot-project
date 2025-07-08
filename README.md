@@ -58,7 +58,7 @@ I have made  make my own modifications and improvements (i.e, add new features).
 
 ## Endpoints
 
-- Retrieve all posts: **/api/posts**
+- **GET /api/posts** (Retrieve all posts)
 
 ```bash
 $ curl --location 'http://localhost:8080/api/posts'
