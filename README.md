@@ -65,6 +65,7 @@ $ curl --location 'http://localhost:8080/api/posts'
 ```
 <details>
 <summary>Click to see the response</summary>
+
 ```json
 [
     {
