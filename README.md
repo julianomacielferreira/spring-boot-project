@@ -52,6 +52,8 @@ Along the time I will make my own modifications and improvements (i.e, add new f
 
 ```
 
+---
+
 ## Endpoints
 
 - **`GET` /api/posts** (Retrieve all posts)
@@ -89,6 +91,8 @@ $ curl --location 'http://localhost:8080/api/posts'
 ```
 </details>
 
+---
+
 - **`POST` /api/posts** (Create a new post)
 
 ```bash
@@ -116,6 +120,8 @@ $ curl --location 'http://localhost:8080/api/posts' \
 }
 ```
 </details>
+
+---
 
 - **`PUT` /api/posts/`{id}`** (Update an existing post)
 
@@ -145,12 +151,28 @@ $ curl --location --request PUT 'http://localhost:8080/api/posts/2' \
 ```
 </details>
 
-@TODO
+---
+
+- **`DELETE` /api/posts/`{id}`** (Update an existing post)
+
+```bash
+$ curl --location --request DELETE 'http://localhost:8080/api/posts/100'
+```
+
+<details>
+<summary><b>Response</b></summary>
+
+```json
+```
+</details>
+
+---
 
 ## Improvements
 
 - [ ] Add other domain objects (comments, albuns, photos and users)
 - [ ] Create tests
+- [ ] Sanitize input data (maybe using filters ?)
 - [ ] Improve response error messages
 - [ ] Not pass the `id` field in the update body endpoint
 - [ ] Deploy as a docker image
