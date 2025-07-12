@@ -54,7 +54,7 @@ Along the time I will make my own modifications and improvements (i.e, add new f
 
 ## Endpoints
 
-- **GET /api/posts** (Retrieve all posts)
+- **`GET` /api/posts** (Retrieve all posts)
 
 ```bash
 $ curl --location 'http://localhost:8080/api/posts'
@@ -89,7 +89,7 @@ $ curl --location 'http://localhost:8080/api/posts'
 ```
 </details>
 
-- **POST /api/posts** (Create a new post)
+- **`POST` /api/posts** (Create a new post)
 
 ```bash
 $ curl --location 'http://localhost:8080/api/posts' \
@@ -117,12 +117,42 @@ $ curl --location 'http://localhost:8080/api/posts' \
 ```
 </details>
 
+- **`PUT` /api/posts/`{id}`** (Update an existing post)
+
+```bash
+$ curl --location --request PUT 'http://localhost:8080/api/posts/2' \
+--header 'Content-Type: application/json' \
+--data '{
+    "id": 2,
+    "userId": 1,
+    "title": "Title Updated",
+    "body": "Body Updated",
+    "version": 0
+}'
+```
+
+<details>
+<summary><b>Response</b></summary>
+
+```json
+{
+  "id": 2,
+  "userId": 1,
+  "title": "Title Updated",
+  "body": "Body Updated",
+  "version": 1
+}
+```
+</details>
+
 @TODO
 
 ## Improvements
 
 - [ ] Add other domain objects (comments, albuns, photos and users)
 - [ ] Create tests
+- [ ] Improve response error messages
+- [ ] Not pass the `id` field in the update body endpoint
 - [ ] Deploy as a docker image
 
 ## Running the application
