@@ -1,4 +1,4 @@
-# Spring Boot Project `$${\color{red}in progress}$$`
+# Spring Boot Project $${\color{red}[in \space progress]}$$
 
 This is a Rest API project and the initial code is based on the tutorial from [Dan Vega](https://www.youtube.com/@DanVega) called [**Test Driven Development (TDD) in Spring**](https://youtube.com/watch?v=-H5sud1-K5A).
 Along the time I will make my own modifications and improvements (i.e, add new features).
