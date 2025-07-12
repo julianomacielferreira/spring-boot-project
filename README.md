@@ -1,6 +1,6 @@
 # Spring Boot Project $${\color{red}[in \space progress]}$$
 
-This is a Rest API project and the initial code is based on the tutorial from [Dan Vega](https://www.youtube.com/@DanVega) called [**Test Driven Development (TDD) in Spring**](https://youtube.com/watch?v=-H5sud1-K5A).
+This is a Simple CRUD Rest API project. The initial code is based on the tutorial from [Dan Vega](https://www.youtube.com/@DanVega) called [**Test Driven Development (TDD) in Spring**](https://youtube.com/watch?v=-H5sud1-K5A).
 Along the time I will make my own modifications and improvements (i.e, add new features).
 
 ![Test Driven Development (TDD) in Spring](./src/main/resources/static/video-thumbnail.jpg)
@@ -52,10 +52,6 @@ Along the time I will make my own modifications and improvements (i.e, add new f
 
 ```
 
-## Running the application
-
-@TODO
-
 ## Endpoints
 
 - **GET /api/posts** (Retrieve all posts)
@@ -92,6 +88,44 @@ $ curl --location 'http://localhost:8080/api/posts'
 ]
 ```
 </details>
+
+- **POST /api/posts** (Create a new post)
+
+```bash
+$ curl --location 'http://localhost:8080/api/posts' \
+--header 'Content-Type: application/json' \
+--data '{
+    "id": 100,
+    "userId": 100,
+    "title": "New Title Created",
+    "body": "New Body Created",
+    "version": 0
+}'
+```
+
+<details>
+<summary><b>Response</b></summary>
+
+```json
+{
+  "id": 100,
+  "userId": 100,
+  "title": "New Title Created",
+  "body": "New Body Created",
+  "version": 1
+}
+```
+</details>
+
+@TODO
+
+## Improvements
+
+- [ ] Add other domain objects (comments, albuns, photos and users)
+- [ ] Create tests
+- [ ] Deploy as a docker image
+
+## Running the application
 
 @TODO
 
