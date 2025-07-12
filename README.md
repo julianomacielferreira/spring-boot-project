@@ -63,9 +63,8 @@ Along the time I will make my own modifications and improvements (i.e, add new f
 ```bash
 $ curl --location 'http://localhost:8080/api/posts'
 ```
-
-- Response:
-
+<details>
+<summary>Click to see the response</summary>
 ```json
 [
     {
@@ -91,6 +90,7 @@ $ curl --location 'http://localhost:8080/api/posts'
     }
 ]
 ```
+</details>
 
 @TODO
 
