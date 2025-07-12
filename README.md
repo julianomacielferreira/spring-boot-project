@@ -64,7 +64,7 @@ Along the time I will make my own modifications and improvements (i.e, add new f
 $ curl --location 'http://localhost:8080/api/posts'
 ```
 <details>
-<summary>Click to see the response</summary>
+<summary><b>Response</b></summary>
 
 ```json
 [
