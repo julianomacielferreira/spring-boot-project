@@ -17,7 +17,6 @@ Along the time I will make my own modifications and improvements (i.e, add new f
 │       └── gradle-wrapper.properties
 ├── gradlew
 ├── gradlew.bat
-├── HELP.md
 ├── LICENSE
 ├── README.md
 ├── settings.gradle
@@ -27,6 +26,12 @@ Along the time I will make my own modifications and improvements (i.e, add new f
     │   │   └── dev
     │   │       └── mlocks
     │   │           ├── Application.java
+    │   │           ├── comments
+    │   │           │   ├── CommentController.java
+    │   │           │   ├── CommentDataLoader.java
+    │   │           │   ├── Comment.java
+    │   │           │   ├── CommentRepository.java
+    │   │           │   └── Comments.java
     │   │           └── posts
     │   │               ├── PostController.java
     │   │               ├── PostDataLoader.java
@@ -37,16 +42,18 @@ Along the time I will make my own modifications and improvements (i.e, add new f
     │   └── resources
     │       ├── application.properties
     │       ├── data
+    │       │   ├── comments.json
     │       │   └── posts.json
     │       ├── schema.sql
     │       ├── static
-    │       │   ├── project-file-structure.png
     │       │   └── video-thumbnail.jpg
     │       └── templates
     └── test
         └── java
             └── dev
                 └── mlocks
+                    ├── comments
+                    │   └── CommentsControllerTest.java
                     └── posts
                         └── PostControllerTest.java
 
