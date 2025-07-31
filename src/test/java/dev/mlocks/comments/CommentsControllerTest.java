@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
-@WebMvcTest(Comment.class)
+@WebMvcTest(CommentController.class)
 @AutoConfigureMockMvc
 public class CommentsControllerTest {
 
@@ -70,7 +70,7 @@ public class CommentsControllerTest {
                       "id": 1,
                       "name": "Name 1",
                       "email": "email1@email.com",
-                      "body": "This is my first comment,
+                      "body": "This is my first comment",
                       "version": null
                     },
                     {
@@ -78,7 +78,7 @@ public class CommentsControllerTest {
                       "id": 2,
                       "name": "Name 2",
                       "email": "email2@email.com",
-                      "body": "This is my second comment,
+                      "body": "This is my second comment",
                       "version": null
                     }
                 ]
