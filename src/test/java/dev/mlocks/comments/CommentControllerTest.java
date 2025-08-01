@@ -38,11 +38,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @WebMvcTest(CommentController.class)
 @AutoConfigureMockMvc
-public class CommentsControllerTest {
+public class CommentControllerTest {
 
     @Autowired
     MockMvc mockMvc;
