@@ -47,8 +47,9 @@ class PostController {
 
     @GetMapping("/{id}")
     Optional<Post> findById(@PathVariable Integer id) {
-        return Optional.of(this.postRepository.findById(id).
-                orElseThrow());
+        return Optional.of(
+                this.postRepository.findById(id).orElseThrow()
+        );
     }
 
     @ResponseStatus(HttpStatus.CREATED)
