@@ -38,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @WebMvcTest(CommentController.class)
 @AutoConfigureMockMvc
@@ -98,5 +99,39 @@ public class CommentControllerTest {
 
         this.mockMvc.perform(get("/api/comments/999")).
                 andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldFindCommentWhenGivenValidId() throws Exception {
+
+        when(this.commentRepository.findById(1)).thenReturn(Optional.of(this.comments.getFirst()));
+
+        Comment comment = this.comments.getFirst();
+
+        String response = this.getJSONFromComment(comment);
+
+        this.mockMvc.perform(get("/api/comments/1")).
+                andExpect(status().isOk()).
+                andExpect(content().json(response));
+
+    }
+
+    private String getJSONFromComment(Comment comment) {
+
+        return String.format("""
+                            {
+                              "postId": %s,
+                              "id": %s,
+                              "name": "%s",
+                              "email": "%s",
+                              "body": "%s",
+                              "version": null
+                            }
+                        """,
+                comment.postId(),
+                comment.id(),
+                comment.name(),
+                comment.email(),
+                comment.body());
     }
 }
