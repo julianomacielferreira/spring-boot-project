@@ -98,12 +98,12 @@ public class PostControllerTest {
 
         Post post = this.posts.getFirst();
 
-        String requestBody = this.getJSONFromPost(post);
+        String response = this.getJSONFromPost(post);
 
         this.mockMvc.perform(get("/api/posts/1")).
                 andExpect(status().isOk()).
                 andExpect(content().
-                        json(requestBody)
+                        json(response)
                 );
     }
 
