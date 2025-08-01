@@ -32,6 +32,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -114,6 +115,22 @@ public class CommentControllerTest {
                 andExpect(status().isOk()).
                 andExpect(content().json(response));
 
+    }
+
+    @Test
+    void shouldCreateNewCommentWhenCommentIsValid() throws Exception {
+
+        Comment comment = new Comment(3, 3, "Name 3", "email3@email.com", "Comment body 3", null);
+
+        when(this.commentRepository.save(comment)).thenReturn(comment);
+
+        String requestBody = this.getJSONFromComment(comment);
+
+        this.mockMvc.perform(
+                post("/api/comments").
+                        contentType("application/json").
+                        content(requestBody)
+        ).andExpect(status().isCreated());
     }
 
     private String getJSONFromComment(Comment comment) {
