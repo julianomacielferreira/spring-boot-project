@@ -30,6 +30,7 @@ Along the time I will make my own modifications and improvements (i.e, add new f
     │   │           │   ├── CommentController.java
     │   │           │   ├── CommentDataLoader.java
     │   │           │   ├── Comment.java
+    │   │           │   ├── CommentNotFoundException.java
     │   │           │   ├── CommentRepository.java
     │   │           │   └── Comments.java
     │   │           └── posts
@@ -53,7 +54,7 @@ Along the time I will make my own modifications and improvements (i.e, add new f
             └── dev
                 └── mlocks
                     ├── comments
-                    │   └── CommentsControllerTest.java
+                    │   └── CommentControllerTest.java
                     └── posts
                         └── PostControllerTest.java
 
