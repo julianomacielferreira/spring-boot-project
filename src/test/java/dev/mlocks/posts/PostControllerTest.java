@@ -135,11 +135,11 @@ public class PostControllerTest {
     @Test
     void shouldNotCreatePostWhenPostIsInvalid() throws Exception {
 
-        Post post = new Post(4, 4, "", "", null);
+        Post invalid = new Post(4, 4, "", "", null);
 
-        when(this.postRepository.save(post)).thenReturn(post);
+        when(this.postRepository.save(invalid)).thenReturn(invalid);
 
-        String requestBody = this.getJSONFromPost(post);
+        String requestBody = this.getJSONFromPost(invalid);
 
         this.mockMvc.perform(
                 post("/api/posts").
