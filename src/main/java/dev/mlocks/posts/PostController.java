@@ -60,6 +60,7 @@ class PostController {
 
     @PutMapping("/{id}")
     Post update(@PathVariable Integer id, @RequestBody @Valid Post post) {
+
         Optional<Post> existing = this.postRepository.findById(id);
 
         if (existing.isPresent()) {

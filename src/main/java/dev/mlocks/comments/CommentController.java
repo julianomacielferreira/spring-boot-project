@@ -57,4 +57,26 @@ public class CommentController {
     Comment create(@RequestBody @Valid Comment comment) {
         return this.commentRepository.save(comment);
     }
+
+    @PutMapping("/{id}")
+    Comment update(@PathVariable Integer id, @RequestBody @Valid Comment comment) {
+
+        Optional<Comment> existing = this.commentRepository.findById(id);
+
+        if (existing.isPresent()) {
+
+            Comment update = new Comment(
+                    existing.get().id(),
+                    existing.get().postId(),
+                    comment.name(),
+                    comment.body(),
+                    comment.body(),
+                    existing.get().version()
+            );
+
+            return this.commentRepository.save(update);
+        } else {
+            throw new CommentNotFoundException("Comment not found");
+        }
+    }
 }
