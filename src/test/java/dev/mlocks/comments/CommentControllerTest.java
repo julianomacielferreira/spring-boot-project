@@ -30,10 +30,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.shaded.org.checkerframework.checker.units.qual.C;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -147,7 +149,23 @@ public class CommentControllerTest {
                         contentType("application/json").
                         content(requestBody)
         ).andExpect(status().isBadRequest());
+    }
 
+    @Test
+    void shouldUpdateWhenGivenValidComment() throws Exception {
+
+        Comment updated = new Comment(1, 1, "Name updated", "email_updated@email.com", "body updated", null);
+
+        when(this.commentRepository.findById(1)).thenReturn(Optional.of(updated));
+        when(this.commentRepository.save(updated)).thenReturn(updated);
+
+        String requestBody = this.getJSONFromComment(updated);
+
+        this.mockMvc.perform(
+                put("/api/comments/1").
+                        contentType("application/json").
+                        content(requestBody)
+        ).andExpect(status().isOk());
     }
 
     private String getJSONFromComment(Comment comment) {
