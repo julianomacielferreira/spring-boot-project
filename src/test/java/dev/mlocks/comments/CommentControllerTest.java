@@ -67,7 +67,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    void shouldFindAllComments() throws Exception {
+    void shouldFindAll() throws Exception {
 
         String jsonResponse = """
                 [
@@ -98,7 +98,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    void shouldNotFindCommentWhenGivenInvalidId() throws Exception {
+    void shouldNotFindWhenGivenInvalidId() throws Exception {
 
         when(this.commentRepository.findById(999)).thenThrow(CommentNotFoundException.class);
 
@@ -107,7 +107,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    void shouldFindCommentWhenGivenValidId() throws Exception {
+    void shouldFindWhenGivenValidId() throws Exception {
 
         when(this.commentRepository.findById(1)).thenReturn(Optional.of(this.comments.getFirst()));
 
@@ -122,7 +122,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    void shouldCreateNewCommentWhenCommentIsValid() throws Exception {
+    void shouldCreateNewWhenCommentIsValid() throws Exception {
 
         Comment comment = new Comment(3, 3, "Name 3", "email3@email.com", "Comment body 3", null);
 
@@ -138,7 +138,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    void shouldNotCreateCommentWhenGivenInvalidComment() throws Exception {
+    void shouldNotCreateWhenGivenInvalidComment() throws Exception {
 
         Comment invalid = new Comment(4, 4, "", "", "", null);
 
@@ -171,7 +171,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    void shouldNotUpdateCommentWhenGivenInvalidComment() throws Exception {
+    void shouldNotUpdateWhenGivenInvalidComment() throws Exception {
 
         Comment invalid = new Comment(999, 999, "Comment not exists", "not_exists@email.com", "Body not exists", null);
 
@@ -185,7 +185,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    void shouldDeleteCommentWhenGivenValidId() throws Exception {
+    void shouldDeleteWhenGivenValidId() throws Exception {
 
         doNothing().when(this.commentRepository).deleteById(1);
 

@@ -63,7 +63,7 @@ public class PostControllerTest {
     }
 
     @Test
-    void shouldFindAllPosts() throws Exception {
+    void shouldFindAll() throws Exception {
 
         String jsonResponse = """
                 [
@@ -92,7 +92,7 @@ public class PostControllerTest {
     }
 
     @Test
-    void shouldFindPostWhenGivenValidId() throws Exception {
+    void shouldFindWhenGivenValidId() throws Exception {
 
         when(this.postRepository.findById(1)).thenReturn(Optional.of(this.posts.getFirst()));
 
@@ -108,7 +108,7 @@ public class PostControllerTest {
     }
 
     @Test
-    void shouldNotFindPostWhenGivenInvalidId() throws Exception {
+    void shouldNotFindWhenGivenInvalidId() throws Exception {
 
         when(this.postRepository.findById(999)).thenThrow(PostNotFoundException.class);
 
@@ -117,7 +117,7 @@ public class PostControllerTest {
     }
 
     @Test
-    void shouldCreateNewPostWhenPostIsValid() throws Exception {
+    void shouldCreateNewWhenPostIsValid() throws Exception {
 
         Post post = new Post(3, 3, "Title 3", "This is my third post", null);
 
@@ -133,7 +133,7 @@ public class PostControllerTest {
     }
 
     @Test
-    void shouldNotCreatePostWhenPostIsInvalid() throws Exception {
+    void shouldNotCreateWhenPostIsInvalid() throws Exception {
 
         Post invalid = new Post(4, 4, "", "", null);
 
@@ -149,7 +149,7 @@ public class PostControllerTest {
     }
 
     @Test
-    void shouldUpdatePostWhenGivenValidPost() throws Exception {
+    void shouldUpdateWhenGivenValidPost() throws Exception {
 
         Post updated = new Post(1, 1, "Updated Title 1", "Updated Body 1", null);
 
@@ -166,7 +166,7 @@ public class PostControllerTest {
     }
 
     @Test
-    void shouldNotUpdatePostWhenGivenInvalidPost() throws Exception {
+    void shouldNotUpdateWhenGivenInvalidPost() throws Exception {
 
         Post invalid = new Post(999, 999, "Title not exists", "Body not exists", null);
 
@@ -180,7 +180,7 @@ public class PostControllerTest {
     }
 
     @Test
-    void shouldDeletePostWhenGivenValidId() throws Exception {
+    void shouldDeleteWhenGivenValidId() throws Exception {
 
         doNothing().when(this.postRepository).deleteById(1);
 
