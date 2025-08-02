@@ -23,10 +23,9 @@
  */
 package dev.mlocks.comments;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -51,5 +50,11 @@ public class CommentController {
         return Optional.of(
                 this.commentRepository.findById(id).orElseThrow()
         );
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("")
+    Comment create(@RequestBody @Valid Comment comment) {
+        return this.commentRepository.save(comment);
     }
 }
