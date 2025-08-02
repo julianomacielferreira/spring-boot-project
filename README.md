@@ -62,7 +62,7 @@ Along the time I will make my own modifications and improvements (i.e, add new f
 
 ---
 
-## Posts Endpoints
+## Post Endpoints
 
 - **`GET` /api/posts** (Retrieve all posts)
 
@@ -176,7 +176,7 @@ $ curl --location --request DELETE 'http://localhost:8080/api/posts/100'
 
 ---
 
-## Comments Endpoints
+## Comment Endpoints
 
 - **`GET` /api/comments** (Retrieve all comments)
 
