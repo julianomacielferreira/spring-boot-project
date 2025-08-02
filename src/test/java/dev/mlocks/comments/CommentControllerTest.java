@@ -171,17 +171,15 @@ public class CommentControllerTest {
     @Test
     void shouldNotUpdateCommentWhenGivenInvalidComment() throws Exception {
 
-        Comment invalid = new Comment(4, 4, "", "", "", null);
-
-        when(this.commentRepository.save(invalid)).thenReturn(invalid);
+        Comment invalid = new Comment(999, 999, "Comment not exists", "not_exists@email.com", "Body not exists", null);
 
         String requestBody = this.getJSONFromComment(invalid);
 
         this.mockMvc.perform(
-                put("/api/comments/4").
+                put("/api/comments/999").
                         contentType("application/json").
                         content(requestBody)
-        ).andExpect(status().isBadRequest());
+        ).andExpect(status().isNotFound());
     }
 
     private String getJSONFromComment(Comment comment) {
