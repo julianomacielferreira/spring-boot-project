@@ -169,7 +169,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    void shouldNotUpdateCommentWhenCommentIsInvalid() throws Exception {
+    void shouldNotUpdateCommentWhenGivenInvalidComment() throws Exception {
 
         Comment invalid = new Comment(4, 4, "", "", "", null);
 
