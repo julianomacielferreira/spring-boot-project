@@ -136,7 +136,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    void shouldNotCreateCommentWhenCommentIsInvalid() throws Exception {
+    void shouldNotCreateCommentWhenGivenInvalidComment() throws Exception {
 
         Comment invalid = new Comment(4, 4, "", "", "", null);
 
