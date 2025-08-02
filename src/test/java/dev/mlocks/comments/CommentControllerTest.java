@@ -133,6 +133,23 @@ public class CommentControllerTest {
         ).andExpect(status().isCreated());
     }
 
+    @Test
+    void shouldNotCreateCommentWhenCommentIsInvalid() throws Exception {
+
+        Comment comment = new Comment(4, 4, "", "", "", null);
+
+        when(this.commentRepository.save(comment)).thenReturn(comment);
+
+        String requestBody = this.getJSONFromComment(comment);
+
+        this.mockMvc.perform(
+                post("/api/comments").
+                        contentType("application/json").
+                        content(requestBody)
+        ).andExpect(status().isBadRequest());
+
+    }
+
     private String getJSONFromComment(Comment comment) {
 
         return String.format("""
