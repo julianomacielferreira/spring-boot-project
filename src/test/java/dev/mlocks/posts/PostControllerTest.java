@@ -163,8 +163,6 @@ public class PostControllerTest {
                         contentType("application/json").
                         content(requestBody)
         ).andExpect(status().isOk());
-
-
     }
 
     @Test
@@ -179,7 +177,6 @@ public class PostControllerTest {
                         contentType("application/json").
                         content(requestBody)
         ).andExpect(status().isNotFound());
-
     }
 
     @Test

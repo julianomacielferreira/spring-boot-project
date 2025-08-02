@@ -32,10 +32,12 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.shaded.org.checkerframework.checker.units.qual.C;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -180,6 +182,17 @@ public class CommentControllerTest {
                         contentType("application/json").
                         content(requestBody)
         ).andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldDeleteCommentWhenGivenValidId() throws Exception {
+
+        doNothing().when(this.commentRepository).deleteById(1);
+
+        this.mockMvc.perform(
+                delete("/api/comments/1")
+        ).andExpect(status().isNoContent());
+
     }
 
     private String getJSONFromComment(Comment comment) {
