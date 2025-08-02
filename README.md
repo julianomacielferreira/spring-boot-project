@@ -161,7 +161,7 @@ $ curl --location --request PUT 'http://localhost:8080/api/posts/2' \
 
 ---
 
-- **`DELETE` /api/posts/`{id}`** (Update an existing post)
+- **`DELETE` /api/posts/`{id}`** (Remove an existing post)
 
 ```bash
 $ curl --location --request DELETE 'http://localhost:8080/api/posts/100'
@@ -176,11 +176,123 @@ $ curl --location --request DELETE 'http://localhost:8080/api/posts/100'
 
 ---
 
+- **`GET` /api/comments** (Retrieve all comments)
+
+```bash
+$ curl --location 'http://localhost:8080/api/comments'
+```
+<details>
+<summary><b>Response</b></summary>
+
+```json
+[
+      {
+        "id": 1,
+        "postId": 1,
+        "name": "id labore ex et quam laborum",
+        "email": "Eliseo@gardner.biz",
+        "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium",
+        "version": 0
+      },
+      {
+        "id": 2,
+        "postId": 1,
+        "name": "quo vero reiciendis velit similique earum",
+        "email": "Jayne_Kuhic@sydney.com",
+        "body": "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et",
+        "version": 0
+      }
+]
+```
+</details>
+
+---
+
+- **`POST` /api/comments** (Create a new comment)
+
+```bash
+$ curl --location 'http://localhost:8080/api/comments' \
+--header 'Content-Type: application/json' \
+--data '{
+    "id": 1010,
+    "postId": 1010,
+    "name": "New Comment Created",
+    "email": "new_email@email.com",
+    "body": "New Body Created",
+    "version": 0
+}'
+```
+
+<details>
+<summary><b>Response</b></summary>
+
+```json
+{
+  "id": 101,
+  "postId": 101,
+  "name": "New Comment Created",
+  "email": "new_email@email.com",
+  "body": "New Body Created",
+  "version": 1
+}
+```
+</details>
+
+---
+
+- **`PUT` /api/comments/`{id}`** (Update an existing comment)
+
+```bash
+$ curl --location --request PUT 'http://localhost:8080/api/comments/2' \
+--header 'Content-Type: application/json' \
+--data '{
+    "id": 2,
+    "postId": 1,
+    "name": "Name Updated",
+    "email": "email@email.com",
+    "body": "Body Updated",
+    "version": 0
+}'
+```
+
+<details>
+<summary><b>Response</b></summary>
+
+```json
+{
+  "id": 2,
+  "postId": 1,
+  "name": "Name Updated",
+  "email": "Body Updated",
+  "body": "Body Updated",
+  "version": 1
+}
+```
+</details>
+
+---
+
+- **`DELETE` /api/comments/`{id}`** (Remove an existing comment)
+
+```bash
+$ curl --location --request DELETE 'http://localhost:8080/api/comments/100'
+```
+
+<details>
+<summary><b>Response</b></summary>
+
+```json
+```
+</details>
+
+---
+
 ## Improvements
 
-- [ ] Add other domain objects (comments, albuns, photos and users)
+- [ ] Add other domain objects (albuns, photos and users)
 - [ ] Create tests
 - [ ] Sanitize input data (maybe using filters ?)
+- [ ] Validate constraints for duplicated data (email unique, etc)
 - [ ] Improve response error messages
 - [ ] Not pass the `id` field in the update body endpoint
 - [ ] Deploy as a docker image
