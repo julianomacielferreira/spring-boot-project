@@ -138,11 +138,11 @@ public class CommentControllerTest {
     @Test
     void shouldNotCreateCommentWhenCommentIsInvalid() throws Exception {
 
-        Comment comment = new Comment(4, 4, "", "", "", null);
+        Comment invalid = new Comment(4, 4, "", "", "", null);
 
-        when(this.commentRepository.save(comment)).thenReturn(comment);
+        when(this.commentRepository.save(invalid)).thenReturn(invalid);
 
-        String requestBody = this.getJSONFromComment(comment);
+        String requestBody = this.getJSONFromComment(invalid);
 
         this.mockMvc.perform(
                 post("/api/comments").
@@ -166,6 +166,22 @@ public class CommentControllerTest {
                         contentType("application/json").
                         content(requestBody)
         ).andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldNotUpdateCommentWhenCommentIsInvalid() throws Exception {
+
+        Comment invalid = new Comment(4, 4, "", "", "", null);
+
+        when(this.commentRepository.save(invalid)).thenReturn(invalid);
+
+        String requestBody = this.getJSONFromComment(invalid);
+
+        this.mockMvc.perform(
+                put("/api/comments/4").
+                        contentType("application/json").
+                        content(requestBody)
+        ).andExpect(status().isBadRequest());
     }
 
     private String getJSONFromComment(Comment comment) {
