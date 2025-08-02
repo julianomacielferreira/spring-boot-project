@@ -79,4 +79,10 @@ public class CommentController {
             throw new CommentNotFoundException("Comment not found");
         }
     }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    void delete(@PathVariable Integer id) {
+        this.commentRepository.deleteById(id);
+    }
 }
