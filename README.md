@@ -166,14 +166,6 @@ $ curl --location --request PUT 'http://localhost:8080/api/posts/2' \
 ```bash
 $ curl --location --request DELETE 'http://localhost:8080/api/posts/100'
 ```
-
-<details>
-<summary><b>Response</b></summary>
-
-```json
-```
-</details>
-
 ---
 
 ## Comment Endpoints
@@ -279,13 +271,6 @@ $ curl --location --request PUT 'http://localhost:8080/api/comments/2' \
 ```bash
 $ curl --location --request DELETE 'http://localhost:8080/api/comments/100'
 ```
-
-<details>
-<summary><b>Response</b></summary>
-
-```json
-```
-</details>
 
 ---
 
