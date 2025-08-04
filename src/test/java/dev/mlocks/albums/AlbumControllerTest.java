@@ -32,8 +32,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -127,6 +126,20 @@ public class AlbumControllerTest {
                         contentType("application/json").
                         content(requestBody)
         ).andExpect(status().isCreated());
+    }
+
+    @Test
+    void shouldNotUpdateWhenGivenInvalidAlbum() throws Exception {
+
+        Album invalid = new Album(999, 999, "Album not exists", null);
+
+        String requestBody = this.getJSONFromAlbum(invalid);
+
+        this.mockMvc.perform(
+                put("/api/albums/999").
+                        contentType("application/json").
+                        content(requestBody)
+        ).andExpect(status().isNotFound());
     }
 
     private String getJSONFromAlbum(Album album) {
