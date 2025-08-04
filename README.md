@@ -60,6 +60,10 @@ Along the time I will make my own modifications and improvements (i.e, add new f
 
 ```
 
+## Spring Boot Dependencies
+
+![Spring Boot Dependencies](./src/main/resources/static/spring-boot-project-depencies.png)
+
 ---
 
 ## Post Endpoints
