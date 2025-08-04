@@ -23,45 +23,20 @@
  */
 package dev.mlocks.posts;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
+import dev.mlocks.util.AbstractDataLoader;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-
 @Component
-public class PostDataLoader implements CommandLineRunner {
+public class PostDataLoader extends AbstractDataLoader<Post, Posts> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PostDataLoader.class);
-    private final ObjectMapper objectMapper;
-    private final PostRepository postRepository;
 
     public PostDataLoader(ObjectMapper objectMapper, PostRepository postRepository) {
-        this.objectMapper = objectMapper;
-        this.postRepository = postRepository;
+        super(objectMapper, "/data/posts.json", postRepository, Posts.class);
     }
 
     @Override
-    public void run(String... args) throws Exception {
-
-        if (postRepository.count() == 0) {
-            String POSTS_JSON = "/data/posts.json";
-
-            LOGGER.info("Loading posts into database from JSON: {}", POSTS_JSON);
-
-            try (InputStream inputStream = TypeReference.class.getResourceAsStream(POSTS_JSON)) {
-                Posts response = objectMapper.readValue(inputStream, Posts.class);
-                postRepository.saveAll(response.posts());
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to read JSON data");
-            }
-        }
+    protected void loadData(Posts response) {
+        ((PostRepository) repository).saveAll(response.posts());
     }
-
-
 }
