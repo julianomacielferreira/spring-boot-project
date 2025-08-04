@@ -23,42 +23,19 @@
  */
 package dev.mlocks.albums;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
+import dev.mlocks.util.AbstractDataLoader;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 @Component
-public class AlbumDataLoader implements CommandLineRunner {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AlbumDataLoader.class);
-    private final ObjectMapper objectMapper;
-    private final AlbumRepository albumRepository;
+public class AlbumDataLoader extends AbstractDataLoader<Album, Albums> {
 
     public AlbumDataLoader(ObjectMapper objectMapper, AlbumRepository albumRepository) {
-        this.objectMapper = objectMapper;
-        this.albumRepository = albumRepository;
+        super(objectMapper, "/data/albums.json", albumRepository, Albums.class);
     }
 
     @Override
-    public void run(String... args) throws Exception {
-
-        if (albumRepository.count() == 0) {
-            String ALBUM_JSON = "/data/albums.json";
-
-            LOGGER.info("Loading albums into database from JSON: {}", ALBUM_JSON);
-
-            try (InputStream inputStream = TypeReference.class.getResourceAsStream(ALBUM_JSON)) {
-                Albums response = objectMapper.readValue(inputStream, Albums.class);
-                albumRepository.saveAll(response.albums());
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to read JSON data");
-            }
-        }
+    protected void loadData(Albums response) {
+        ((AlbumRepository) repository).saveAll(response.albums());
     }
 }
