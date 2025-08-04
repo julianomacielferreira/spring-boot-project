@@ -16,3 +16,11 @@ CREATE TABLE IF NOT EXISTS Comment (
     version INT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS Album (
+    id INT NOT NULL,
+    user_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    version INT NULL,
+    PRIMARY KEY (id)
+);
