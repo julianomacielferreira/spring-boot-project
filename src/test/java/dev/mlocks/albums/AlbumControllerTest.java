@@ -31,6 +31,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -157,6 +158,16 @@ public class AlbumControllerTest {
                         contentType("application/json").
                         content(requestBody)
         ).andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldDeleteWhenGivenValidId() throws Exception {
+
+        doNothing().when(this.albumRepository).deleteById(1);
+
+        this.mockMvc.perform(
+                delete("/api/albums/1")
+        ).andExpect(status().isNoContent());
     }
 
     private String getJSONFromAlbum(Album album) {
