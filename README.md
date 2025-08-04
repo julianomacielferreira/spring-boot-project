@@ -25,6 +25,13 @@ Along the time I will make my own modifications and improvements (i.e, add new f
     │   ├── java
     │   │   └── dev
     │   │       └── mlocks
+    │   │           ├── albums
+    │   │           │   ├── AlbumController.java
+    │   │           │   ├── AlbumDataLoader.java
+    │   │           │   ├── Album.java
+    │   │           │   ├── AlbumNotFoundException.java
+    │   │           │   ├── AlbumRepository.java
+    │   │           │   └── Albums.java
     │   │           ├── Application.java
     │   │           ├── comments
     │   │           │   ├── CommentController.java
@@ -33,26 +40,32 @@ Along the time I will make my own modifications and improvements (i.e, add new f
     │   │           │   ├── CommentNotFoundException.java
     │   │           │   ├── CommentRepository.java
     │   │           │   └── Comments.java
-    │   │           └── posts
-    │   │               ├── PostController.java
-    │   │               ├── PostDataLoader.java
-    │   │               ├── Post.java
-    │   │               ├── PostNotFoundException.java
-    │   │               ├── PostRepository.java
-    │   │               └── Posts.java
+    │   │           ├── posts
+    │   │           │   ├── PostController.java
+    │   │           │   ├── PostDataLoader.java
+    │   │           │   ├── Post.java
+    │   │           │   ├── PostNotFoundException.java
+    │   │           │   ├── PostRepository.java
+    │   │           │   └── Posts.java
+    │   │           └── util
+    │   │               └── AbstractDataLoader.java
     │   └── resources
     │       ├── application.properties
     │       ├── data
+    │       │   ├── albums.json
     │       │   ├── comments.json
     │       │   └── posts.json
     │       ├── schema.sql
     │       ├── static
+    │       │   ├── spring-boot-project-depencies.png
     │       │   └── video-thumbnail.jpg
     │       └── templates
     └── test
         └── java
             └── dev
                 └── mlocks
+                    ├── albums
+                    │   └── AlbumControllerTest.java
                     ├── comments
                     │   └── CommentControllerTest.java
                     └── posts
