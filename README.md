@@ -281,8 +281,9 @@ $ curl --location --request DELETE 'http://localhost:8080/api/comments/100'
 ## Improvements
 
 - [ ] Add other domain objects (albuns, photos and users)
-- [ ] Create tests
-- [ ] Sanitize input data (maybe using filters ?)
+- [ ] Add JWT and security layer
+- [ ] Add Rate Limiter
+- [ ] Sanitize input data (using filters)
 - [ ] Validate constraints for duplicated data (email unique, etc)
 - [ ] Improve response error messages
 - [ ] Not pass the `id` field in the update body endpoint
