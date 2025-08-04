@@ -103,6 +103,15 @@ public class AlbumControllerTest {
                 andExpect(content().json(response));
     }
 
+    @Test
+    void shouldNotFindWhenGivenInvalidId() throws Exception {
+
+        when(this.albumRepository.findById(999)).thenThrow(AlbumNotFoundException.class);
+
+        this.mockMvc.perform(get("/api/albums/999")).
+                andExpect(status().isNotFound());
+    }
+
     private String getJSONFromAlbum(Album album) {
 
         return String.format("""
