@@ -23,43 +23,20 @@
  */
 package dev.mlocks.comments;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-import org.springframework.boot.CommandLineRunner;
+import dev.mlocks.util.AbstractDataLoader;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.io.InputStream;
 
 @Component
-public class CommentDataLoader implements CommandLineRunner {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(CommentDataLoader.class);
-    private final ObjectMapper objectMapper;
-    private final CommentRepository commentRepository;
+public class CommentDataLoader extends AbstractDataLoader<Comment, Comments> {
 
     public CommentDataLoader(ObjectMapper objectMapper, CommentRepository commentRepository) {
-        this.objectMapper = objectMapper;
-        this.commentRepository = commentRepository;
+        super(objectMapper, "/data/comments.json", commentRepository, Comments.class);
     }
 
     @Override
-    public void run(String... args) throws Exception {
-
-        if (commentRepository.count() == 0) {
-            String COMMENTS_JSON = "/data/comments.json";
-
-            LOGGER.info("Loading comments into database from JSON: {}", COMMENTS_JSON);
-
-            try (InputStream inputStream = TypeReference.class.getResourceAsStream(COMMENTS_JSON)) {
-                Comments response = objectMapper.readValue(inputStream, Comments.class);
-                commentRepository.saveAll(response.comments());
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to read JSON data");
-            }
-
-        }
+    protected void loadData(Comments response) {
+        ((CommentRepository) repository).saveAll(response.comments());
     }
 }
