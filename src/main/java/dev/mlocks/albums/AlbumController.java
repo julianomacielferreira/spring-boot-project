@@ -58,5 +58,24 @@ public class AlbumController {
         return this.albumRepository.save(album);
     }
 
+    @PutMapping("/{id}")
+    Album update(@PathVariable Integer id, @RequestBody @Valid Album album) {
+
+        Optional<Album> existing = this.albumRepository.findById(id);
+
+        if (existing.isPresent()) {
+
+            Album update = new Album(
+                    existing.get().id(),
+                    existing.get().userId(),
+                    album.title(),
+                    existing.get().version()
+            );
+
+            return this.albumRepository.save(update);
+        } else {
+            throw new AlbumNotFoundException("Album not found");
+        }
+    }
 
 }
