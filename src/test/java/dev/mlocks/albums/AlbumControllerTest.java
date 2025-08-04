@@ -142,6 +142,23 @@ public class AlbumControllerTest {
         ).andExpect(status().isNotFound());
     }
 
+    @Test
+    void shouldUpdateWhenGivenValidAlbum() throws Exception {
+
+        Album updated = new Album(1, 1, "Title Updated", null);
+
+        when(this.albumRepository.findById(1)).thenReturn(Optional.of(updated));
+        when(this.albumRepository.save(updated)).thenReturn(updated);
+
+        String requestBody = this.getJSONFromAlbum(updated);
+
+        this.mockMvc.perform(
+                put("/api/albums/1").
+                        contentType("application/json").
+                        content(requestBody)
+        ).andExpect(status().isOk());
+    }
+
     private String getJSONFromAlbum(Album album) {
 
         return String.format("""
