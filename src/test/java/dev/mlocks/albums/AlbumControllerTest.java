@@ -38,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @WebMvcTest(AlbumController.class)
 @AutoConfigureMockMvc
@@ -86,5 +87,35 @@ public class AlbumControllerTest {
         this.mockMvc.perform(get("/api/albums")).
                 andExpect(status().isOk()).
                 andExpect(content().json(jsonResponse));
+    }
+
+    @Test
+    void shouldFindWhenGivenValidId() throws Exception {
+
+        when(this.albumRepository.findById(1)).thenReturn(Optional.of(this.albums.getFirst()));
+
+        Album album = this.albums.getFirst();
+
+        String response = this.getJSONFromAlbum(album);
+
+        this.mockMvc.perform(get("/api/albums/1")).
+                andExpect(status().isOk()).
+                andExpect(content().json(response));
+    }
+
+    private String getJSONFromAlbum(Album album) {
+
+        return String.format("""
+                            {
+                              "userId": %s,
+                              "id": %s,
+                              "title": "%s",
+                              "version": null
+                            }
+                        """,
+                album.userId(),
+                album.id(),
+                album.title()
+        );
     }
 }
