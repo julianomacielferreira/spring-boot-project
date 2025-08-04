@@ -317,6 +317,7 @@ $ curl --location --request DELETE 'http://localhost:8080/api/comments/100'
 - [ ] Validate constraints for duplicated data (email unique, etc)
 - [ ] Improve response error messages
 - [ ] Not pass the `id` field in the update body endpoint
+- [ ] Setup to run with docker locally
 - [ ] Deploy as a docker image
 
 ## Running the application
