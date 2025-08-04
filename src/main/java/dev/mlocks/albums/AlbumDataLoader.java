@@ -48,15 +48,17 @@ public class AlbumDataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        String ALBUM_JSON = "/data/albums.json";
+        if (albumRepository.count() == 0) {
+            String ALBUM_JSON = "/data/albums.json";
 
-        LOGGER.info("Loading albums into database from JSON: {}", ALBUM_JSON);
+            LOGGER.info("Loading albums into database from JSON: {}", ALBUM_JSON);
 
-        try (InputStream inputStream = TypeReference.class.getResourceAsStream(ALBUM_JSON)) {
-            Albums response = objectMapper.readValue(inputStream, Albums.class);
-            albumRepository.saveAll(response.albums());
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to read JSON data");
+            try (InputStream inputStream = TypeReference.class.getResourceAsStream(ALBUM_JSON)) {
+                Albums response = objectMapper.readValue(inputStream, Albums.class);
+                albumRepository.saveAll(response.albums());
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to read JSON data");
+            }
         }
     }
 }
