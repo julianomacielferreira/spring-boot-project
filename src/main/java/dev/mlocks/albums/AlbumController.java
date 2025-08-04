@@ -24,10 +24,12 @@
 package dev.mlocks.albums;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/albums")
@@ -42,5 +44,12 @@ public class AlbumController {
     @GetMapping("")
     List<Album> findAll() {
         return this.albumRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    Optional<Album> findById(@PathVariable Integer id) {
+        return Optional.of(
+                this.albumRepository.findById(id).orElseThrow()
+        );
     }
 }
