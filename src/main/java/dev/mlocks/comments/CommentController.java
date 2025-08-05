@@ -23,6 +23,7 @@
  */
 package dev.mlocks.comments;
 
+import dev.mlocks.util.AbstractController;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,36 +33,16 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/comments")
-public class CommentController {
-
-    private final CommentRepository commentRepository;
+public class CommentController extends AbstractController<Comment, Integer, CommentRepository, CommentNotFoundException> {
 
     public CommentController(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
-    }
-
-    @GetMapping("")
-    List<Comment> findAll() {
-        return this.commentRepository.findAll();
-    }
-
-    @GetMapping("/{id}")
-    Optional<Comment> findById(@PathVariable Integer id) {
-        return Optional.of(
-                this.commentRepository.findById(id).orElseThrow()
-        );
-    }
-
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("")
-    Comment create(@RequestBody @Valid Comment comment) {
-        return this.commentRepository.save(comment);
+        super(commentRepository, CommentNotFoundException.class);
     }
 
     @PutMapping("/{id}")
-    Comment update(@PathVariable Integer id, @RequestBody @Valid Comment comment) {
+    public Comment update(@PathVariable Integer id, @RequestBody @Valid Comment comment) {
 
-        Optional<Comment> existing = this.commentRepository.findById(id);
+        Optional<Comment> existing = this.repository.findById(id);
 
         if (existing.isPresent()) {
 
@@ -74,15 +55,10 @@ public class CommentController {
                     existing.get().version()
             );
 
-            return this.commentRepository.save(update);
+            return this.repository.save(update);
         } else {
-            throw new CommentNotFoundException("Comment not found");
+            throwException("Comment not found");
+            return null; // never reach this point
         }
-    }
-
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
-    void delete(@PathVariable Integer id) {
-        this.commentRepository.deleteById(id);
     }
 }
