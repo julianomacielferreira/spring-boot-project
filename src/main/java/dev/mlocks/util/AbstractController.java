@@ -42,12 +42,12 @@ public abstract class AbstractController<T, ID, R extends ListCrudRepository<T, 
     }
 
     @GetMapping("")
-    List<T> findAll() {
+    public List<T> findAll() {
         return this.repository.findAll();
     }
 
     @GetMapping("/{id}")
-    Optional<T> findById(@PathVariable ID id) throws Exception {
+    public Optional<T> findById(@PathVariable ID id) throws Exception {
         return Optional.of(this.repository.findById(id).orElseThrow(() -> {
             try {
                 return exceptionClass.getConstructor(String.class).newInstance("Entity not found");
@@ -59,26 +59,16 @@ public abstract class AbstractController<T, ID, R extends ListCrudRepository<T, 
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    T create(@RequestBody @Valid T entity) {
+    public T create(@RequestBody @Valid T entity) {
         return this.repository.save(entity);
     }
 
     @PutMapping("/{id}")
-    T update(@PathVariable ID id, @RequestBody @Valid T entity) {
-
-        Optional<T> existing = this.repository.findById(id);
-
-        if (existing.isPresent()) {
-            return this.repository.save(entity);
-        } else {
-            throwException("Entity not found");
-            return null; // never reach this point
-        }
-    }
+    protected abstract T update(@PathVariable ID id, @RequestBody @Valid T entity);
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    void delete(@PathVariable ID id) {
+    public void delete(@PathVariable ID id) {
         this.repository.deleteById(id);
     }
 
