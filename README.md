@@ -154,8 +154,7 @@ $ curl --location 'http://localhost:8080/api/posts' \
     "id": 100,
     "userId": 100,
     "title": "New Title Created",
-    "body": "New Body Created",
-    "version": 0
+    "body": "New Body Created"
 }'
 ```
 
@@ -256,8 +255,7 @@ $ curl --location 'http://localhost:8080/api/comments' \
     "postId": 1010,
     "name": "New Comment Created",
     "email": "new_email@email.com",
-    "body": "New Body Created",
-    "version": 0
+    "body": "New Body Created"
 }'
 ```
 
@@ -318,9 +316,101 @@ $ curl --location --request DELETE 'http://localhost:8080/api/comments/100'
 
 ---
 
+## Album Endpoints
+
+- **`GET` /api/albums** (Retrieve all albums)
+
+```bash
+$ curl --location 'http://localhost:8080/api/albums'
+```
+<details>
+<summary><b>Response</b></summary>
+
+```json
+[
+      {
+        "id": 1,
+        "userId": 1,
+        "title": "quidem molestiae enim",
+        "version": 0
+      },
+      {
+        "id": 2,
+        "userId": 1,
+        "title": "sunt qui excepturi placeat culpa",
+        "version": 0
+      }
+    ]
+```
+</details>
+
+---
+
+- **`POST` /api/albums** (Create a new album)
+
+```bash
+$ curl --location 'http://localhost:8080/api/albums' \
+--header 'Content-Type: application/json' \
+--data '{
+    "id": 1010,
+    "userId": 1010,
+    "title": "New Album Created"
+}'
+```
+
+<details>
+<summary><b>Response</b></summary>
+
+```json
+{
+  "id": 1010,
+  "userId": 1010,
+  "title": "New Album Created",
+  "version": 0
+}
+```
+</details>
+
+---
+
+- **`PUT` /api/albums/`{id}`** (Update an existing album)
+
+```bash
+$ curl --location --request PUT 'http://localhost:8080/api/albums/2' \
+--header 'Content-Type: application/json' \
+--data '{
+    "id": 2,
+    "userId": 1,
+    "title": "Title Updated",
+    "version": 0
+}'
+```
+
+<details>
+<summary><b>Response</b></summary>
+
+```json
+{
+  "id": 2,
+  "userId": 1,
+  "title": "Title Updated",
+  "version": 1
+}
+```
+</details>
+
+---
+
+- **`DELETE` /api/albums/`{id}`** (Remove an existing album)
+
+```bash
+$ curl --location --request DELETE 'http://localhost:8080/api/albums/100'
+```
+
 ## Improvements
 
 - [ ] Add other domain objects (photos and users)
+- [ ] Add relationships between the models
 - [ ] Add JWT and security layer
 - [ ] Add Rate Limiter
 - [ ] Sanitize input data (using filters)
