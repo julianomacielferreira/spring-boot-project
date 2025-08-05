@@ -23,45 +23,24 @@
  */
 package dev.mlocks.albums;
 
+import dev.mlocks.util.AbstractController;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/albums")
-public class AlbumController {
-
-    private final AlbumRepository albumRepository;
+public class AlbumController extends AbstractController<Album, Integer, AlbumRepository, AlbumNotFoundException> {
 
     public AlbumController(AlbumRepository albumRepository) {
-        this.albumRepository = albumRepository;
-    }
-
-    @GetMapping("")
-    List<Album> findAll() {
-        return this.albumRepository.findAll();
-    }
-
-    @GetMapping("/{id}")
-    Optional<Album> findById(@PathVariable Integer id) {
-        return Optional.of(
-                this.albumRepository.findById(id).orElseThrow()
-        );
-    }
-
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("")
-    Album create(@RequestBody @Valid Album album) {
-        return this.albumRepository.save(album);
+        super(albumRepository, AlbumNotFoundException.class);
     }
 
     @PutMapping("/{id}")
-    Album update(@PathVariable Integer id, @RequestBody @Valid Album album) {
+    public Album update(@PathVariable Integer id, @RequestBody @Valid Album album) {
 
-        Optional<Album> existing = this.albumRepository.findById(id);
+        Optional<Album> existing = this.repository.findById(id);
 
         if (existing.isPresent()) {
 
@@ -72,16 +51,10 @@ public class AlbumController {
                     existing.get().version()
             );
 
-            return this.albumRepository.save(update);
+            return this.repository.save(update);
         } else {
-            throw new AlbumNotFoundException("Album not found");
+            throwException("Album not found");
+            return null; // never reach this point
         }
     }
-
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
-    void delete(@PathVariable Integer id) {
-        this.albumRepository.deleteById(id);
-    }
-
 }
