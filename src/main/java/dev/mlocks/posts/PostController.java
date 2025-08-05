@@ -23,64 +23,33 @@
  */
 package dev.mlocks.posts;
 
+import dev.mlocks.util.AbstractController;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/posts")
-class PostController {
-
-    private final PostRepository postRepository;
+class PostController extends AbstractController<Post, Integer, PostRepository, PostNotFoundException> {
 
     public PostController(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
-
-    @GetMapping("")
-    List<Post> findAll() {
-        return this.postRepository.findAll();
-    }
-
-    @GetMapping("/{id}")
-    Optional<Post> findById(@PathVariable Integer id) {
-        return Optional.of(
-                this.postRepository.findById(id).orElseThrow()
-        );
-    }
-
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("")
-    Post create(@RequestBody @Valid Post post) {
-        return this.postRepository.save(post);
+        super(postRepository, PostNotFoundException.class);
     }
 
     @PutMapping("/{id}")
-    Post update(@PathVariable Integer id, @RequestBody @Valid Post post) {
+    public Post update(@PathVariable Integer id, @RequestBody @Valid Post post) {
 
-        Optional<Post> existing = this.postRepository.findById(id);
+        Optional<Post> existing = this.repository.findById(id);
 
         if (existing.isPresent()) {
 
-            Post update = new Post(
-                    existing.get().id(),
-                    existing.get().userId(),
-                    post.title(),
-                    post.body(),
-                    existing.get().version());
+            Post update = new Post(existing.get().id(), existing.get().userId(), post.title(), post.body(), existing.get().version());
 
-            return this.postRepository.save(update);
+            return this.repository.save(update);
         } else {
-            throw new PostNotFoundException("Post not found.");
+            throwException("Post not found.");
+            return null; // never reach this point
         }
-    }
-
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
-    void delete(@PathVariable Integer id) {
-        this.postRepository.deleteById(id);
     }
 }
