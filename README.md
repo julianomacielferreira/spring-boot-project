@@ -11,6 +11,7 @@ Along the time I will make my own modifications and improvements (i.e, add new f
 .
 ├── build.gradle
 ├── compose.yaml
+├── Dockerfile
 ├── gradle
 │   └── wrapper
 │       ├── gradle-wrapper.jar
@@ -48,6 +49,7 @@ Along the time I will make my own modifications and improvements (i.e, add new f
     │   │           │   ├── PostRepository.java
     │   │           │   └── Posts.java
     │   │           └── util
+    │   │               ├── AbstractController.java
     │   │               └── AbstractDataLoader.java
     │   └── resources
     │       ├── application.properties
@@ -71,6 +73,7 @@ Along the time I will make my own modifications and improvements (i.e, add new f
                     └── posts
                         └── PostControllerTest.java
 
+
 ```
 
 ## Spring Boot Dependencies
@@ -93,6 +96,13 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 ```
+
+## Running the application
+
+Prerequisites
+- Java Development Kit (JDK) installed on your machine
+
+@TODO 
 
 ---
 
@@ -310,7 +320,7 @@ $ curl --location --request DELETE 'http://localhost:8080/api/comments/100'
 
 ## Improvements
 
-- [ ] Add other domain objects (albuns, photos and users)
+- [ ] Add other domain objects (photos and users)
 - [ ] Add JWT and security layer
 - [ ] Add Rate Limiter
 - [ ] Sanitize input data (using filters)
@@ -319,10 +329,6 @@ $ curl --location --request DELETE 'http://localhost:8080/api/comments/100'
 - [ ] Not pass the `id` field in the update body endpoint
 - [ ] Setup to run with docker locally
 - [ ] Deploy as a docker image
-
-## Running the application
-
-@TODO
 
 ## References
 
