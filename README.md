@@ -102,7 +102,23 @@ dependencies {
 Prerequisites
 - Java Development Kit (JDK) installed on your machine
 
-@TODO 
+Since you used the ``org.springframework.boot`` Gradle plugin, you have a useful bootRun goal that you can use to start the application. Type gradle bootRun from the root project directory to start the application. You should see output similar to the following:
+
+```bash
+$ gradle bootRun
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::  (v3.5.4)
+....... . . .
+....... . . . (log output here)
+....... . . .
+........ Started Application in 0.906 seconds (process running for 6.514)
+```
 
 ---
 
