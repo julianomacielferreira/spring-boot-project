@@ -100,12 +100,18 @@ dependencies {
 ## Running the application
 
 Prerequisites
-- Java Development Kit (JDK) installed on your machine
+- Java Development Kit (JDK) 17 or above installed on your machine
+
+Make ``gradlew`` executable:
+
+```bash
+$ chmod +x gradlew
+```
 
 Since you used the ``org.springframework.boot`` Gradle plugin, you have a useful bootRun goal that you can use to start the application. Type gradle bootRun from the root project directory to start the application. You should see output similar to the following:
 
 ```bash
-$ gradle bootRun
+$ ./gradlew bootRun
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -118,6 +124,42 @@ $ gradle bootRun
 ....... . . . (log output here)
 ....... . . .
 ........ Started Application in 0.906 seconds (process running for 6.514)
+```
+
+## Build the application
+
+To create an executable jar, we need to run gradle bootJar from the command line, as follows:
+
+```bash
+$ ./gradlew bootJar
+
+BUILD SUCCESSFUL in 639ms
+3 actionable tasks: 3 executed
+```
+
+If you look in the ``build/libs`` directory, you should see spring-boot-project-0.0.1-SNAPSHOT.jar. The file should be around 18 MB in size. 
+If you want to peek inside, you can use jar tvf, as follows:
+
+```bash
+$ jar tvf spring-boot-project-0.0.1-SNAPSHOT.jar
+```
+
+To run that application, use the java -jar command, as follows:
+
+```bash
+$ java -jar build/libs/spring-boot-project-0.0.1-SNAPSHOT.jar
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::  (v{version-spring-boot})
+....... . . .
+....... . . . (log output here)
+....... . . .
+........ Started Application in 0.999 seconds (process running for 1.253)
 ```
 
 ---
