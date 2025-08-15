@@ -134,6 +134,22 @@ public class PhotoControllerTest {
         ).andExpect(status().isCreated());
     }
 
+    @Test
+    void shouldNotCreateWhenPhotoIsInvalid() throws Exception {
+
+        Photo invalid = new Photo(4, 4, "", "", "", null);
+
+        when(this.photoRepository.save(invalid)).thenReturn(invalid);
+
+        String requestBody = this.getJSONFromPost(invalid);
+
+        this.mockMvc.perform(
+                post("/api/photos").
+                        contentType("application/json").
+                        content(requestBody)
+        ).andExpect(status().isBadRequest());
+    }
+
     private String getJSONFromPost(Photo photo) {
 
         return String.format("""
