@@ -36,8 +36,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -148,6 +147,24 @@ public class PhotoControllerTest {
                         contentType("application/json").
                         content(requestBody)
         ).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void shouldUpdateWhenGivenValidPhoto() throws Exception {
+
+        Photo updated = new Photo(1, 1, "Title updated", "https://via.placeholder.com/600/24f355", "https://via.placeholder.com/150/24f355", null);
+
+        when(this.photoRepository.findById(1)).thenReturn(Optional.of(updated));
+        when(this.photoRepository.save(updated)).thenReturn(updated);
+
+        String requestBody = this.getJSONFromPost(updated);
+
+        this.mockMvc.perform(
+                put("/api/photos/1").
+                        contentType("application/json").
+                        content(requestBody)
+        ).andExpect(status().isOk());
+
     }
 
     private String getJSONFromPost(Photo photo) {
