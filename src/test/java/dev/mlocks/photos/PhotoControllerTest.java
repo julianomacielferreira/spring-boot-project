@@ -1,0 +1,93 @@
+/*
+ * The MIT License
+ *
+ * Copyright 2025 juliano.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+package dev.mlocks.photos;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@WebMvcTest(PhotoController.class)
+@AutoConfigureMockMvc
+public class PhotoControllerTest {
+
+    @Autowired
+    MockMvc mockMvc;
+
+    List<Photo> photos = new ArrayList();
+
+    @MockitoBean
+    PhotoRepository photoRepository;
+
+    @BeforeEach
+    void setUp() {
+
+        // create some photos
+        photos = List.of(
+                new Photo(1, 1, "Photo 1", "https://via.placeholder.com/600/92c952", "https://via.placeholder.com/150/92c952", null),
+                new Photo(2, 2, "Photo 2", "https://via.placeholder.com/600/771796", "https://via.placeholder.com/150/771796", null)
+        );
+    }
+
+    @Test
+    void shouldFindAll() throws Exception {
+
+        String jsonResponse = """
+                [
+                    {
+                     "albumId": 1,
+                     "id": 1,
+                     "title": "Photo 1",
+                     "url": "https://via.placeholder.com/600/92c952",
+                     "thumbnailUrl": "https://via.placeholder.com/150/92c952"
+                    },
+                    {
+                     "albumId": 2,
+                     "id": 2,
+                     "title": "Photo 2",
+                     "url": "https://via.placeholder.com/600/771796",
+                     "thumbnailUrl": "https://via.placeholder.com/150/771796"
+                    }
+                ]
+                """;
+
+        when(this.photoRepository.findAll()).thenReturn(this.photos);
+
+        this.mockMvc.perform(get("/api/photos")).
+                andExpect(status().isOk()).
+                andExpect(content().json(jsonResponse));
+
+    }
+}
