@@ -33,6 +33,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -90,4 +91,51 @@ public class PhotoControllerTest {
                 andExpect(content().json(jsonResponse));
 
     }
+
+    @Test
+    void shouldFindWhenGivenValidId() throws Exception {
+
+        when(this.photoRepository.findById(1)).thenReturn(Optional.of(this.photos.getFirst()));
+
+        Photo photo = this.photos.getFirst();
+
+        String response = this.getJSONFromPost(photo);
+
+        this.mockMvc.perform(get("/api/photos/1")).
+                andExpect(status().isOk()).
+                andExpect(content().
+                        json(response)
+                );
+    }
+
+    @Test
+    void shouldNotFindWhenGivenInvalidId() throws Exception {
+
+        when(this.photoRepository.findById(999)).thenThrow(PhotoNotFoundException.class);
+
+        this.mockMvc.perform(get("/api/photos/999")).
+                andExpect(status().isNotFound());
+    }
+
+
+    private String getJSONFromPost(Photo photo) {
+
+        return String.format("""
+                            {
+                              "albumId": %s,
+                              "id": %s,
+                              "title": "%s",
+                              "url": "%s",
+                              "thumbnailUrl": "%s",
+                              "version": null
+                            }
+                        """,
+                photo.albumId(),
+                photo.id(),
+                photo.title(),
+                photo.url(),
+                photo.thumbnailUrl(),
+                photo.version());
+    }
+
 }
