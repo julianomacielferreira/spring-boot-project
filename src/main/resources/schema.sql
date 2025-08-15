@@ -24,3 +24,13 @@ CREATE TABLE IF NOT EXISTS Album (
     version INT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS Photo (
+    id INT NOT NULL,
+    album_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    url VARCHAR(255) NOT NULL,
+    thumbnail_url VARCHAR(255) NOT NULL,
+    version INT NULL,
+    PRIMARY KEY(id)
+);
