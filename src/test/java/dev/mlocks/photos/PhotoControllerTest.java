@@ -35,7 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -178,6 +179,18 @@ public class PhotoControllerTest {
                         contentType("application/json").
                         content(requestBody)
         ).andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldDeleteWhenGivenValidId() throws Exception {
+
+        doNothing().when(this.photoRepository).deleteById(1);
+
+        this.mockMvc.perform(
+                delete("/api/photos/1")
+        ).andExpect(status().isNoContent());
+
+        verify(this.photoRepository, times(1)).deleteById(1);
     }
 
     private String getJSONFromPhoto(Photo photo) {
