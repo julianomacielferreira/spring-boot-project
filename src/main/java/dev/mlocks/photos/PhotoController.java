@@ -55,8 +55,8 @@ public class PhotoController extends AbstractController<Photo, Integer, PhotoRep
 
             return this.repository.save(update);
         } else {
-            throwException("Photo not found");
-            return null;
+            throwException("Photo not found.");
+            return null; // never reach this point
         }
     }
 }

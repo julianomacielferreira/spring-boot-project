@@ -99,7 +99,7 @@ public class PhotoControllerTest {
 
         Photo photo = this.photos.getFirst();
 
-        String response = this.getJSONFromPost(photo);
+        String response = this.getJSONFromPhoto(photo);
 
         this.mockMvc.perform(get("/api/photos/1")).
                 andExpect(status().isOk()).
@@ -124,7 +124,7 @@ public class PhotoControllerTest {
 
         when(this.photoRepository.save(photo)).thenReturn(photo);
 
-        String requestBody = this.getJSONFromPost(photo);
+        String requestBody = this.getJSONFromPhoto(photo);
 
         this.mockMvc.perform(
                 post("/api/photos").
@@ -140,7 +140,7 @@ public class PhotoControllerTest {
 
         when(this.photoRepository.save(invalid)).thenReturn(invalid);
 
-        String requestBody = this.getJSONFromPost(invalid);
+        String requestBody = this.getJSONFromPhoto(invalid);
 
         this.mockMvc.perform(
                 post("/api/photos").
@@ -157,17 +157,30 @@ public class PhotoControllerTest {
         when(this.photoRepository.findById(1)).thenReturn(Optional.of(updated));
         when(this.photoRepository.save(updated)).thenReturn(updated);
 
-        String requestBody = this.getJSONFromPost(updated);
+        String requestBody = this.getJSONFromPhoto(updated);
 
         this.mockMvc.perform(
                 put("/api/photos/1").
                         contentType("application/json").
                         content(requestBody)
         ).andExpect(status().isOk());
-
     }
 
-    private String getJSONFromPost(Photo photo) {
+    @Test
+    void shouldNotUpdateWhenGivenInvalidPhoto() throws Exception {
+
+        Photo invalid = new Photo(9999, 9999, "Title not exists", "not exists", "not exists", null);
+
+        String requestBody = this.getJSONFromPhoto(invalid);
+
+        this.mockMvc.perform(
+                put("/api/photos/9999").
+                        contentType("application/json").
+                        content(requestBody)
+        ).andExpect(status().isNotFound());
+    }
+
+    private String getJSONFromPhoto(Photo photo) {
 
         return String.format("""
                             {
