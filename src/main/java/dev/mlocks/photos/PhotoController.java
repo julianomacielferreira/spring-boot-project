@@ -24,8 +24,10 @@
 package dev.mlocks.photos;
 
 import dev.mlocks.util.AbstractController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/photos")
@@ -35,8 +37,26 @@ public class PhotoController extends AbstractController<Photo, Integer, PhotoRep
         super(photoRepository, PhotoNotFoundException.class);
     }
 
-    @Override
-    protected Photo update(Integer integer, Photo entity) {
-        return null;
+    @PutMapping("/{id}")
+    public Photo update(@PathVariable Integer id, @RequestBody @Valid Photo photo) {
+
+        Optional<Photo> existing = this.repository.findById(id);
+
+        if (existing.isPresent()) {
+
+            Photo update = new Photo(
+                    existing.get().id(),
+                    existing.get().albumId(),
+                    photo.title(),
+                    photo.url(),
+                    photo.thumbnailUrl(),
+                    existing.get().version()
+            );
+
+            return this.repository.save(update);
+        } else {
+            throwException("Photo not found");
+            return null;
+        }
     }
 }
