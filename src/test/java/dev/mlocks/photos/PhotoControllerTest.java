@@ -37,6 +37,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -117,6 +118,21 @@ public class PhotoControllerTest {
                 andExpect(status().isNotFound());
     }
 
+    @Test
+    void shouldCreateNewWhenPhotoIsValid() throws Exception {
+
+        Photo photo = new Photo(3, 3, "Photo 3", "https://via.placeholder.com/600/92c952", "https://via.placeholder.com/150/92c952", null);
+
+        when(this.photoRepository.save(photo)).thenReturn(photo);
+
+        String requestBody = this.getJSONFromPost(photo);
+
+        this.mockMvc.perform(
+                post("/api/photos").
+                        contentType("application/json").
+                        content(requestBody)
+        ).andExpect(status().isCreated());
+    }
 
     private String getJSONFromPost(Photo photo) {
 
