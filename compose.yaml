@@ -7,3 +7,10 @@ services:
       - 'POSTGRES_USER=postgres'
     ports:
       - '5432:5432'
+    networks:
+      - spring-boot-project
+
+networks:
+  spring-boot-project:
+    name: spring-boot-project
+    driver: bridge
