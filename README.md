@@ -41,6 +41,13 @@ Along the time I will make my own modifications and improvements (i.e, add new f
     │   │           │   ├── CommentNotFoundException.java
     │   │           │   ├── CommentRepository.java
     │   │           │   └── Comments.java
+    │   │           ├── photos
+    │   │           │   ├── PhotoController.java
+    │   │           │   ├── PhotoDataLoader.java
+    │   │           │   ├── Photo.java
+    │   │           │   ├── PhotoNotFoundException.java
+    │   │           │   ├── PhotoRepository.java
+    │   │           │   └── Photos.java
     │   │           ├── posts
     │   │           │   ├── PostController.java
     │   │           │   ├── PostDataLoader.java
@@ -56,6 +63,7 @@ Along the time I will make my own modifications and improvements (i.e, add new f
     │       ├── data
     │       │   ├── albums.json
     │       │   ├── comments.json
+    │       │   ├── photos.json
     │       │   └── posts.json
     │       ├── schema.sql
     │       ├── static
@@ -70,10 +78,10 @@ Along the time I will make my own modifications and improvements (i.e, add new f
                     │   └── AlbumControllerTest.java
                     ├── comments
                     │   └── CommentControllerTest.java
+                    ├── photos
+                    │   └── PhotoControllerTest.java
                     └── posts
                         └── PostControllerTest.java
-
-
 ```
 
 ## Spring Boot Dependencies
