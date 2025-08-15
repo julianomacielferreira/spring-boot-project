@@ -203,6 +203,27 @@ $ curl --location 'http://localhost:8080/api/posts'
 
 ---
 
+- **`GET` /api/posts/``{id}``** (Retrieve a specific post)
+
+```bash
+$ curl --location 'http://localhost:8080/api/posts/1'
+```
+<details>
+<summary><b>Response</b></summary>
+
+```json
+    {
+        "id": 1,
+        "userId": 1,
+        "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+        "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+        "version": 0
+    }
+```
+</details>
+
+---
+
 - **`POST` /api/posts** (Create a new post)
 
 ```bash
@@ -298,6 +319,28 @@ $ curl --location 'http://localhost:8080/api/comments'
         "version": 0
       }
 ]
+```
+</details>
+
+---
+
+- **`GET` /api/comments/``{id}``** (Retrieve a specific comment)
+
+```bash
+$ curl --location 'http://localhost:8080/api/comments/1'
+```
+<details>
+<summary><b>Response</b></summary>
+
+```json
+      {
+        "id": 1,
+        "postId": 1,
+        "name": "id labore ex et quam laborum",
+        "email": "Eliseo@gardner.biz",
+        "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium",
+        "version": 0
+      }
 ```
 </details>
 
@@ -404,6 +447,26 @@ $ curl --location 'http://localhost:8080/api/albums'
 
 ---
 
+- **`GET` /api/albums/``{id}``** (Retrieve a specific album)
+
+```bash
+$ curl --location 'http://localhost:8080/api/albums/1'
+```
+<details>
+<summary><b>Response</b></summary>
+
+```json
+      {
+        "id": 1,
+        "userId": 1,
+        "title": "quidem molestiae enim",
+        "version": 0
+      }
+```
+</details>
+
+---
+
 - **`POST` /api/albums** (Create a new album)
 
 ```bash
@@ -464,19 +527,144 @@ $ curl --location --request PUT 'http://localhost:8080/api/albums/2' \
 ```bash
 $ curl --location --request DELETE 'http://localhost:8080/api/albums/100'
 ```
+---
+
+## Photo Endpoints
+
+- **`GET` /api/photos** (Retrieve all photos)
+
+```bash
+$ curl --location 'http://localhost:8080/api/photos'
+```
+<details>
+<summary><b>Response</b></summary>
+
+```json
+[
+  {
+    "id": 1,
+    "albumId": 1,
+    "title": "accusamus beatae ad facilis cum similique qui sunt",
+    "url": "https://via.placeholder.com/600/92c952",
+    "thumbnailUrl": "https://via.placeholder.com/150/92c952",
+    "version": 0
+  },
+  {
+    "id": 2,
+    "albumId": 1,
+    "title": "reprehenderit est deserunt velit ipsam",
+    "url": "https://via.placeholder.com/600/771796",
+    "thumbnailUrl": "https://via.placeholder.com/150/771796",
+    "version": 0
+  }
+]
+```
+</details>
+
+---
+
+- **`GET` /api/photos/``{id}``** (Retrieve a specific photo)
+
+```bash
+$ curl --location 'http://localhost:8080/api/photos/1'
+```
+<details>
+<summary><b>Response</b></summary>
+
+```json
+  {
+    "id": 1,
+    "albumId": 1,
+    "title": "accusamus beatae ad facilis cum similique qui sunt",
+    "url": "https://via.placeholder.com/600/92c952",
+    "thumbnailUrl": "https://via.placeholder.com/150/92c952",
+    "version": 0
+  }
+```
+</details>
+
+---
+
+- **`POST` /api/photos** (Create a new photo)
+
+```bash
+$ curl --location 'http://localhost:8080/api/photos' \
+--header 'Content-Type: application/json' \
+--data '{
+        "id": 6000,
+        "albumId": 6000,
+        "title": "accusamus beatae ad facilis cum similique qui sunt",
+        "url": "https://via.placeholder.com/600/92c952",
+        "thumbnailUrl": "https://via.placeholder.com/150/92c952"
+    }'
+```
+
+<details>
+<summary><b>Response</b></summary>
+
+```json
+{
+  "id": 6000,
+  "albumId": 6000,
+  "title": "accusamus beatae ad facilis cum similique qui sunt",
+  "url": "https://via.placeholder.com/600/92c952",
+  "thumbnailUrl": "https://via.placeholder.com/150/92c952",
+  "version": 0
+}
+```
+</details>
+
+---
+
+- **`PUT` /api/photos/`{id}`** (Update an existing photo)
+
+```bash
+$ curl --location --request PUT 'http://localhost:8080/api/photos/2' \
+--header 'Content-Type: application/json' \
+--data '{
+  "id": 2,
+  "albumId": 2,
+  "title": "Photo Title Updated",
+  "url": "https://via.placeholder.com/600/92c952",
+  "thumbnailUrl": "https://via.placeholder.com/150/92c952",
+  "version": 0
+}'
+```
+
+<details>
+<summary><b>Response</b></summary>
+
+```json
+{
+  "id": 2,
+  "albumId": 1,
+  "title": "Photo Title Updated",
+  "url": "https://via.placeholder.com/600/92c952",
+  "thumbnailUrl": "https://via.placeholder.com/150/92c952",
+  "version": 1
+}
+```
+</details>
+
+---
+
+- **`DELETE` /api/photos/`{id}`** (Remove an existing photo)
+
+```bash
+$ curl --location --request DELETE 'http://localhost:8080/api/photos/100'
+```
 
 ## Improvements
 
-- [ ] Add other domain objects (photos and users)
-- [ ] Add relationships between the models
-- [ ] Add JWT and security layer
+- [ ] Add other domain objects (users, todos)
+- [ ] Add relationships between the models and persistence (Spring Data)
+- [ ] Add JWT and security layer (Spring Security)
 - [ ] Add Rate Limiter
 - [ ] Sanitize input data (using filters)
 - [ ] Validate constraints for duplicated data (email unique, etc)
 - [ ] Improve response error messages
 - [ ] Not pass the `id` field in the update body endpoint
 - [ ] Setup to run with docker locally
-- [ ] Deploy as a docker image
 
 ## References
 
