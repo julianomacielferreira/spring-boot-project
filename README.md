@@ -146,7 +146,7 @@ BUILD SUCCESSFUL in 639ms
 ```
 
 If you look in the ``build/libs`` directory, you should see spring-boot-project-0.0.1-SNAPSHOT.jar. The file should be around 18 MB in size. 
-If you want to peek inside, you can use jar tvf, as follows:
+If you want to peek inside, you can use ``jar tvf``, as follows:
 
 ```bash
 $ jar tvf spring-boot-project-0.0.1-SNAPSHOT.jar
@@ -169,6 +169,33 @@ $ java -jar build/libs/spring-boot-project-0.0.1-SNAPSHOT.jar
 ....... . . .
 ........ Started Application in 0.999 seconds (process running for 1.253)
 ```
+
+## Running with Docker $${\color{red}[pending]}$$
+
+Run the application using Docker Compose with the following command:
+
+```bash
+$ docker-compose up
+```
+
+Or, if you want to run it in detached mode:
+
+```bash
+$ docker-compose up -d
+```
+
+To stop the application, run:
+
+```bash
+$ docker-compose down
+```
+
+Tips and Variations
+
+- Use ``compose.yml`` file to customize the Docker Compose configuration.
+- Use ``SPRING_PROFILES_ACTIVE`` environment variable to activate specific Spring profiles.
+- Use ``docker-compose exec`` command to execute commands inside a running container.
+- Use ``docker logs`` command to view the logs of a container.
 
 ---
 
