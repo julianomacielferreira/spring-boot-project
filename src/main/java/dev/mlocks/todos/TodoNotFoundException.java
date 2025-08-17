@@ -23,21 +23,12 @@
  */
 package dev.mlocks.todos;
 
-import dev.mlocks.util.AbstractController;
-import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-@RestController
-@RequestMapping("/api/todos")
-public class TodoController extends AbstractController<Todo, Integer, TodoRepository, TodoNotFoundException> {
-
-    public TodoController(TodoRepository todoRepository) {
-        super(todoRepository, TodoNotFoundException.class);
-    }
-
-    @PutMapping("/{id}")
-    public Todo update(@PathVariable Integer id, @RequestBody @Valid Todo todo) {
-
-        return null;
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class TodoNotFoundException extends RuntimeException {
+    public TodoNotFoundException(String message) {
+        super(message);
     }
 }

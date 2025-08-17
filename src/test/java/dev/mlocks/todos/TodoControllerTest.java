@@ -23,14 +23,23 @@
  */
 package dev.mlocks.todos;
 
-import dev.mlocks.posts.Todo;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TodoController.class)
 @AutoConfigureMockMvc
@@ -40,4 +49,44 @@ public class TodoControllerTest {
     MockMvc mockMvc;
 
     List<Todo> todos = new ArrayList();
+
+    @MockitoBean
+    TodoRepository todoRepository;
+
+    @BeforeEach
+    void setUp() {
+
+        // create some todos
+        todos = List.of(
+                new Todo(1, 1, "Todo 1", false, null),
+                new Todo(2, 2, "Todo 2", true, null)
+        );
+    }
+
+    @Test
+    void shouldFindAll() throws Exception {
+
+        String jsonResponse = """
+                [
+                    {
+                        "userId": 1,
+                        "id": 1,
+                        "title": "Todo 1",
+                        "completed": false
+                    },
+                    {
+                       "userId": 2,
+                       "id": 2,
+                       "title": "Todo 2",
+                       "completed": true
+                    }
+                ]
+                """;
+
+        when(this.todoRepository.findAll()).thenReturn(this.todos);
+
+        this.mockMvc.perform(get("/api/todos")).
+                andExpect(status().isOk()).
+                andExpect(content().json(jsonResponse));
+    }
 }
