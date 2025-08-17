@@ -147,6 +147,37 @@ public class TodoControllerTest {
         ).andExpect(status().isBadRequest());
     }
 
+    @Test
+    void shouldUpdateWhenGivenValidTodo() throws Exception {
+
+        Todo updated = new Todo(1, 1, "Todo 1 Updated", true, null);
+
+        when(this.todoRepository.findById(1)).thenReturn(Optional.of(updated));
+        when(this.todoRepository.save(updated)).thenReturn(updated);
+
+        String requestBody = this.getJSONFromTodo(updated);
+
+        this.mockMvc.perform(
+                put("/api/todos/1").
+                        contentType("application/json").
+                        content(requestBody)
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldNotUpdateWhenGivenInvalidTodo() throws Exception {
+
+        Todo invalid = new Todo(9999, 9999, "Todo not exists", false, null);
+
+        String requestBody = this.getJSONFromTodo(invalid);
+
+        this.mockMvc.perform(
+                put("/api/photos/9999").
+                        contentType("application/json").
+                        content(requestBody)
+        ).andExpect(status().isNotFound());
+    }
+
     private String getJSONFromTodo(Todo todo) {
 
         return String.format("""
