@@ -89,4 +89,38 @@ public class TodoControllerTest {
                 andExpect(status().isOk()).
                 andExpect(content().json(jsonResponse));
     }
+
+    @Test
+    void shouldFindWhenGivenValidId() throws Exception {
+
+        when(this.todoRepository.findById(1)).thenReturn(Optional.of(this.todos.getFirst()));
+
+        Todo todo = this.todos.getFirst();
+
+        String response = this.getJSONFromTodo(todo);
+
+        this.mockMvc.perform(get("/api/todos/1")).
+                andExpect(status().isOk()).
+                andExpect(content().
+                        json(response)
+                );
+    }
+
+    private String getJSONFromTodo(Todo todo) {
+
+        return String.format("""
+                            {
+                              "userId": %s,
+                              "id": %s,
+                              "title": "%s",
+                              "completed": %s,
+                              "version": null
+                            }
+                        """,
+                todo.userId(),
+                todo.id(),
+                todo.title(),
+                todo.completed(),
+                todo.version());
+    }
 }
