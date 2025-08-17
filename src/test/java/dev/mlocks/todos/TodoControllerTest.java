@@ -106,6 +106,15 @@ public class TodoControllerTest {
                 );
     }
 
+    @Test
+    void shouldNotFindWhenGivenInvalidId() throws Exception {
+
+        when(this.todoRepository.findById(9999)).thenThrow(TodoNotFoundException.class);
+
+        this.mockMvc.perform(get("/api/todos/9999")).
+                andExpect(status().isNotFound());
+    }
+
     private String getJSONFromTodo(Todo todo) {
 
         return String.format("""
