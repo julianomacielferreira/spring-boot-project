@@ -21,23 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package dev.mlocks.todos;
+package dev.mlocks.posts;
 
-import dev.mlocks.posts.Todo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.web.servlet.MockMvc;
+import jakarta.validation.constraints.NotEmpty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@WebMvcTest(TodoController.class)
-@AutoConfigureMockMvc
-public class TodoControllerTest {
-
-    @Autowired
-    MockMvc mockMvc;
-
-    List<Todo> todos = new ArrayList();
+public record Todo(
+        @Id
+        Integer id,
+        Integer userId,
+        @NotEmpty
+        String title,
+        Boolean completed,
+        @Version
+        Integer version
+) {
 }
