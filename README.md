@@ -94,11 +94,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -691,12 +693,13 @@ $ curl --location --request DELETE 'http://localhost:8080/api/photos/100'
 
 ## Improvements
 
-- [ ] Add other domain objects (users, todos)
+- [ ] Add other domain objects (users)
 - [ ] Add relationships between the models and persistence (Spring Data)
 - [ ] Add JWT and security layer (Spring Security)
 - [ ] Add Rate Limiter
 - [ ] Sanitize input data (using filters)
 - [ ] Validate constraints for duplicated data (email unique, etc)
+- [ ] Add pagination on retrieve all endpoints
 - [ ] Improve response error messages
 - [ ] Not pass the `id` field in the update body endpoint
 - [ ] Setup to run with docker locally
