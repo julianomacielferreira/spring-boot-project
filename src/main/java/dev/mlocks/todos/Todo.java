@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package dev.mlocks.posts;
+package dev.mlocks.todos;
 
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
