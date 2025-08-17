@@ -115,6 +115,38 @@ public class TodoControllerTest {
                 andExpect(status().isNotFound());
     }
 
+    @Test
+    void shouldCreateNewWhenTodoIsValid() throws Exception {
+
+        Todo todo = new Todo(3, 3, "Todo 3", true, null);
+
+        when(this.todoRepository.save(todo)).thenReturn(todo);
+
+        String requestBody = this.getJSONFromTodo(todo);
+
+        this.mockMvc.perform(
+                post("/api/todos").
+                        contentType("application/json").
+                        content(requestBody)
+        ).andExpect(status().isCreated());
+    }
+
+    @Test
+    void shouldNotCreateWhenTodoIsInvalid() throws Exception {
+
+        Todo invalid = new Todo(4, 4, "", true, null);
+
+        when(this.todoRepository.save(invalid)).thenReturn(invalid);
+
+        String requestBody = this.getJSONFromTodo(invalid);
+
+        this.mockMvc.perform(
+                post("/api/todos").
+                        contentType("application/json").
+                        content(requestBody)
+        ).andExpect(status().isBadRequest());
+    }
+
     private String getJSONFromTodo(Todo todo) {
 
         return String.format("""
