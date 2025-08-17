@@ -178,6 +178,18 @@ public class TodoControllerTest {
         ).andExpect(status().isNotFound());
     }
 
+    @Test
+    void shouldDeleteWhenGivenValidId() throws Exception {
+
+        doNothing().when(this.todoRepository).deleteById(1);
+
+        this.mockMvc.perform(
+                delete("/api/todos/1")
+        ).andExpect(status().isNoContent());
+
+        verify(this.todoRepository, times(1)).deleteById(1);
+    }
+
     private String getJSONFromTodo(Todo todo) {
 
         return String.format("""
