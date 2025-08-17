@@ -11,7 +11,6 @@ Along the time I will make my own modifications and improvements (i.e, add new f
 .
 ├── build.gradle
 ├── compose.yaml
-├── Dockerfile
 ├── gradle
 │   └── wrapper
 │       ├── gradle-wrapper.jar
@@ -55,6 +54,13 @@ Along the time I will make my own modifications and improvements (i.e, add new f
     │   │           │   ├── PostNotFoundException.java
     │   │           │   ├── PostRepository.java
     │   │           │   └── Posts.java
+    │   │           ├── todos
+    │   │           │   ├── TodoController.java
+    │   │           │   ├── TodoDataLoader.java
+    │   │           │   ├── Todo.java
+    │   │           │   ├── TodoNotFoundException.java
+    │   │           │   ├── TodoRepository.java
+    │   │           │   └── Todos.java
     │   │           └── util
     │   │               ├── AbstractController.java
     │   │               └── AbstractDataLoader.java
@@ -64,7 +70,8 @@ Along the time I will make my own modifications and improvements (i.e, add new f
     │       │   ├── albums.json
     │       │   ├── comments.json
     │       │   ├── photos.json
-    │       │   └── posts.json
+    │       │   ├── posts.json
+    │       │   └── todos.json
     │       ├── schema.sql
     │       ├── static
     │       │   ├── spring-boot-project-depencies.png
@@ -80,8 +87,11 @@ Along the time I will make my own modifications and improvements (i.e, add new f
                     │   └── CommentControllerTest.java
                     ├── photos
                     │   └── PhotoControllerTest.java
-                    └── posts
-                        └── PostControllerTest.java
+                    ├── posts
+                    │   └── PostControllerTest.java
+                    └── todos
+                        └── TodoControllerTest.java
+
 ```
 
 ## Spring Boot Dependencies
