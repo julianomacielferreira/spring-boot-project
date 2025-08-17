@@ -701,6 +701,126 @@ $ curl --location --request PUT 'http://localhost:8080/api/photos/2' \
 $ curl --location --request DELETE 'http://localhost:8080/api/photos/100'
 ```
 
+---
+
+## Todo Endpoints
+
+- **`GET` /api/todos** (Retrieve all todos)
+
+```bash
+$ curl --location 'http://localhost:8080/api/todos'
+```
+<details>
+<summary><b>Response</b></summary>
+
+```json
+[
+  {
+    "id": 1,
+    "userId": 1,
+    "title": "delectus aut autem",
+    "completed": false,
+    "version": 0
+  },
+  {
+    "id": 2,
+    "userId": 1,
+    "title": "quis ut nam facilis et officia qui",
+    "completed": false,
+    "version": 0
+  }
+]
+```
+</details>
+
+---
+
+- **`GET` /api/todos/``{id}``** (Retrieve a specific todo)
+
+```bash
+$ curl --location 'http://localhost:8080/api/todos/1'
+```
+<details>
+<summary><b>Response</b></summary>
+
+```json
+{
+  "id": 1,
+  "userId": 1,
+  "title": "delectus aut autem",
+  "completed": false,
+  "version": 0
+}
+```
+</details>
+
+---
+
+- **`POST` /api/todo** (Create a new todo)
+
+```bash
+$ curl --location 'http://localhost:8080/api/todos' \
+--header 'Content-Type: application/json' \
+--data '{
+        "id": 6000,
+        "userId": 6000,
+        "title": "accusamus beatae ad facilis cum similique qui sunt",
+        "completed": true
+    }'
+```
+
+<details>
+<summary><b>Response</b></summary>
+
+```json
+{
+  "id": 6000,
+  "userId": 6000,
+  "title": "accusamus beatae ad facilis cum similique qui sunt",
+  "completed": true,
+  "version": 0
+}
+```
+</details>
+
+---
+
+- **`PUT` /api/todos/`{id}`** (Update an existing todo)
+
+```bash
+$ curl --location --request PUT 'http://localhost:8080/api/todos/2' \
+--header 'Content-Type: application/json' \
+--data '{
+  "id": 2,
+  "userId": 2,
+  "title": "Todo Title Updated",
+  "completed": false,
+  "version": 0
+}'
+```
+
+<details>
+<summary><b>Response</b></summary>
+
+```json
+{
+  "id": 2,
+  "userId": 1,
+  "title": "Todo Title Updated",
+  "completed": false,
+  "version": 1
+}
+```
+</details>
+
+---
+
+- **`DELETE` /api/todos/`{id}`** (Remove an existing todo)
+
+```bash
+$ curl --location --request DELETE 'http://localhost:8080/api/todos/100'
+```
+
 ## Improvements
 
 - [ ] Add other domain objects (users)
