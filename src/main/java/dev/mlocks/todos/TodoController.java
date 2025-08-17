@@ -27,6 +27,8 @@ import dev.mlocks.util.AbstractController;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/todos")
 public class TodoController extends AbstractController<Todo, Integer, TodoRepository, TodoNotFoundException> {
@@ -38,6 +40,16 @@ public class TodoController extends AbstractController<Todo, Integer, TodoReposi
     @PutMapping("/{id}")
     public Todo update(@PathVariable Integer id, @RequestBody @Valid Todo todo) {
 
-        return null;
+        Optional<Todo> existing = this.repository.findById(id);
+
+        if (existing.isPresent()) {
+
+            Todo update = new Todo(existing.get().id(), existing.get().userId(), todo.title(), todo.completed(), existing.get().version());
+
+            return this.repository.save(update);
+        } else {
+            throwException("Todo not found.");
+            return null; // never reach this point
+        }
     }
 }
