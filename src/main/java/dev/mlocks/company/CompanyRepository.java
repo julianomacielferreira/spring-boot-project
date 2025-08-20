@@ -21,19 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package dev.mlocks.users;
+package dev.mlocks.company;
 
-import jakarta.validation.constraints.NotEmpty;
-import org.springframework.data.annotation.Id;
+import org.springframework.data.repository.ListCrudRepository;
 
-public record Company(
-        @Id
-        Integer id,
-        @NotEmpty
-        String name,
-        @NotEmpty
-        String catchPhrase,
-        @NotEmpty
-        String bs
-) {
+public interface CompanyRepository extends ListCrudRepository<Company, Integer> {
 }
