@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package dev.mlocks.address;
+package dev.mlocks.geolocation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.mlocks.util.AbstractDataLoader;
@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 public class GeoDataLoader extends AbstractDataLoader<Geo, Geos> {
 
     public GeoDataLoader(ObjectMapper objectMapper, GeoRepository geoRepository) {
-        super(objectMapper, "/data/geolocations.json", geoRepository, Geos.class);
+        super(objectMapper, "/data/geos.json", geoRepository, Geos.class);
     }
 
     @Override

@@ -21,17 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package dev.mlocks.address;
+package dev.mlocks.geolocation;
 
-import jakarta.validation.constraints.NotEmpty;
-import org.springframework.data.annotation.Id;
+import org.springframework.data.repository.ListCrudRepository;
 
-public record Geo(
-        @Id
-        Integer id,
-        @NotEmpty
-        Double lat,
-        @NotEmpty
-        Double lng
-) {
+public interface GeoRepository extends ListCrudRepository<Geo, Integer> {
 }
