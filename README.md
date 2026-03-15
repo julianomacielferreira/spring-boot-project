@@ -823,6 +823,7 @@ $ curl --location --request DELETE 'http://localhost:8080/api/todos/100'
 
 ## Improvements
 
+- [ ] Swagger OpenAPI documentation
 - [ ] Add other domain objects (users)
 - [ ] Add relationships between the models and persistence (Spring Data)
 - [ ] Add JWT and security layer (Spring Security)
